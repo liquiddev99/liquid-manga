@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { ParsedUrlQuery } from "querystring";
 import axios from "axios";
 import Image from "next/image";
 import useSWR from "swr";
-import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
 import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
 import NotFound from "../../components/error/NotFound";
@@ -19,26 +18,39 @@ interface MangaDetail extends Manga {
 }
 
 export default function DetailManga(props: { manga: MangaDetail }) {
+  const [chapters, setChapters] = useState<Chapter[]>([]);
   const { manga } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(`/api/manga/${manga.id}`, fetcher);
-  const scrollRef = useBottomScrollListener<HTMLDivElement>(
-    () => console.log("bottom"),
-    {
-      triggerOnNoScroll: true,
-    }
-  );
 
-  if (error && error.response.status === 404) return <NotFound />;
-  if (data) {
-    data.results.sort(
-      (a: Chapter, b: Chapter) =>
-        Number(a.data.attributes.chapter) - Number(b.data.attributes.chapter)
-    );
-    // data.results.map((chapter: Chapter) => {
-    //   console.log(chapter.data.attributes.chapter);
-    // });
-  }
+  useEffect(() => {
+    axios.get(`/api/manga/${manga.id}?offset=0`).then((res) => {
+      const data = res.data;
+      const { total } = data;
+      const count = Math.floor(total / 100);
+      let listChapter: Chapter[] = [];
+      const promises = [];
+      console.log(count);
+      listChapter = listChapter.concat(data.results);
+      for (let i = 1; i <= count; i++) {
+        promises.push(
+          axios.get(`/api/manga/${manga.id}?offset=${i * 100}`).then((res) => {
+            listChapter = listChapter.concat(res.data.results);
+          })
+        );
+      }
+      Promise.all(promises).then(() => {
+        console.log(listChapter);
+        listChapter.sort(
+          (a: Chapter, b: Chapter) =>
+            Number(a.data.attributes.chapter) -
+            Number(b.data.attributes.chapter)
+        );
+        setChapters(listChapter);
+      });
+    });
+  }, []);
+
+  // if (error && error.response.status === 404) return <NotFound />;
 
   return (
     <div className="w-11/12 mx-auto text-white">
@@ -62,12 +74,9 @@ export default function DetailManga(props: { manga: MangaDetail }) {
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">
           List Chapter
         </p>
-        <div
-          ref={scrollRef}
-          className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto"
-        >
-          {data &&
-            data.results.map((chapter: Chapter) => {
+        <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
+          {chapters &&
+            chapters.map((chapter: Chapter) => {
               const date = new Date(chapter.data.attributes.publishAt);
               return (
                 <Link
