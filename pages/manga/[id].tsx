@@ -5,8 +5,9 @@ import { ParsedUrlQuery } from "querystring";
 import axios from "axios";
 import Image from "next/image";
 import useSWR from "swr";
+import { useBottomScrollListener } from "react-bottom-scroll-listener";
 
-import { Manga, Result, Tag } from "../../interfaces/intefaces";
+import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
 import NotFound from "../../components/error/NotFound";
 
 interface IParams extends ParsedUrlQuery {
@@ -21,15 +22,24 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   const { manga } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/manga/${manga.id}`, fetcher);
+  const scrollRef = useBottomScrollListener<HTMLDivElement>(
+    () => console.log("bottom"),
+    {
+      triggerOnNoScroll: true,
+    }
+  );
+
   if (error && error.response.status === 404) return <NotFound />;
   if (data) {
     data.results.sort(
-      (a: any, b: any) => a.data.attributes.chapter - b.data.attributes.chapter
+      (a: Chapter, b: Chapter) =>
+        Number(a.data.attributes.chapter) - Number(b.data.attributes.chapter)
     );
-    data.results.map((result: any) => {
-      console.log(result.data.attributes.chapter);
-    });
+    // data.results.map((chapter: Chapter) => {
+    //   console.log(chapter.data.attributes.chapter);
+    // });
   }
+
   return (
     <div className="w-11/12 mx-auto text-white">
       <div className="w-full text-white flex justify-between py-10">
@@ -52,18 +62,24 @@ export default function DetailManga(props: { manga: MangaDetail }) {
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">
           List Chapter
         </p>
-        <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
+        <div
+          ref={scrollRef}
+          className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto"
+        >
           {data &&
-            data.results.map((result: any) => {
-              const date = new Date(result.data.attributes.publishAt);
+            data.results.map((chapter: Chapter) => {
+              const date = new Date(chapter.data.attributes.publishAt);
               return (
-                <Link key={result.data.id} href={`/chapter/${result.data.id}`}>
+                <Link
+                  key={chapter.data.id}
+                  href={`/chapter/${chapter.data.id}`}
+                >
                   <a>
-                    <div className="py-1 flex justify-between">
+                    <div className="py-1 px-4 flex justify-between">
                       <p>
-                        Chapter {result.data.attributes.chapter}
-                        {result.data.attributes.title &&
-                          ` - ${result.data.attributes.title}`}
+                        Chapter {chapter.data.attributes.chapter}
+                        {chapter.data.attributes.title &&
+                          ` - ${chapter.data.attributes.title}`}
                       </p>
                       <p>
                         {date &&

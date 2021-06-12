@@ -6,6 +6,20 @@ export type Manga = {
   urlImage: string;
 };
 
+export type Chapter = {
+  result: string;
+  data: {
+    id: string;
+    type: string;
+    attributes: {
+      chapter: string;
+      title: string;
+      hash: string;
+      publishAt: string;
+    };
+  };
+};
+
 export type Result = {
   result: string;
   data: {

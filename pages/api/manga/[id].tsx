@@ -11,6 +11,6 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     res.status(200).json(response.data);
   } catch (err) {
     console.log(err.response, "error response");
-    return res.status(500).json({ msg: "Couldn't find this Manga" });
+    return res.status(404).json({ msg: "Couldn't find this Manga" });
   }
 };

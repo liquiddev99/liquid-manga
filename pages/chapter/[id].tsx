@@ -18,7 +18,7 @@ export default function Chapter(props: {
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
   if (error && error.response.status === 404) return <NotFound />;
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <div className="h-screen">Loading...</div>;
 
   return (
     <div className="w-11/12 mx-auto flex flex-col items-center">
