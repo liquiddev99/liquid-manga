@@ -26,9 +26,9 @@ export default function DetailManga(props: { manga: MangaDetail }) {
     data.results.sort(
       (a: any, b: any) => a.data.attributes.chapter - b.data.attributes.chapter
     );
-    data.results.map((result: any) =>
-      console.log(result.data.attributes.chapter)
-    );
+    data.results.map((result: any) => {
+      console.log(result.data.attributes.chapter);
+    });
   }
   return (
     <div className="w-11/12 mx-auto text-white">
@@ -54,17 +54,30 @@ export default function DetailManga(props: { manga: MangaDetail }) {
         </p>
         <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
           {data &&
-            data.results.map((result: any) => (
-              <Link key={result.data.id} href={`/chapter/${result.data.id}`}>
-                <a>
-                  <div className="py-1">
-                    Chapter {result.data.attributes.chapter}
-                    {result.data.attributes.title &&
-                      ` - ${result.data.attributes.title}`}
-                  </div>
-                </a>
-              </Link>
-            ))}
+            data.results.map((result: any) => {
+              const date = new Date(result.data.attributes.publishAt);
+              return (
+                <Link key={result.data.id} href={`/chapter/${result.data.id}`}>
+                  <a>
+                    <div className="py-1 flex justify-between">
+                      <p>
+                        Chapter {result.data.attributes.chapter}
+                        {result.data.attributes.title &&
+                          ` - ${result.data.attributes.title}`}
+                      </p>
+                      <p>
+                        {date &&
+                          date.getDate() +
+                            "/" +
+                            (date.getMonth() + 1) +
+                            "/" +
+                            date.getFullYear()}
+                      </p>
+                    </div>
+                  </a>
+                </Link>
+              );
+            })}
         </div>
       </div>
     </div>

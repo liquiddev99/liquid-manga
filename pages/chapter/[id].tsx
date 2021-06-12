@@ -19,7 +19,6 @@ export default function Chapter(props: {
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
   if (error && error.response.status === 404) return <NotFound />;
   if (!data) return <div>Loading...</div>;
-  if (data) console.log(data);
 
   return (
     <div className="w-11/12 mx-auto flex flex-col items-center">
