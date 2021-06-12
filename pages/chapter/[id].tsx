@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ParsedUrlQuery } from "querystring";
 import useSWR from "swr";
 import axios from "axios";
+import NotFound from "../../components/error/NotFound";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -16,6 +17,7 @@ export default function Chapter(props: {
   const { id, base_url, temp_token } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
+  if (error && error.response.status === 404) return <NotFound />;
   if (!data) return <div>Loading...</div>;
   if (data) console.log(data);
 

@@ -7,6 +7,7 @@ import Image from "next/image";
 import useSWR from "swr";
 
 import { Manga, Result, Tag } from "../../interfaces/intefaces";
+import NotFound from "../../components/error/NotFound";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -20,8 +21,8 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   const { manga } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/manga/${manga.id}`, fetcher);
+  if (error && error.response.status === 404) return <NotFound />;
   if (data) {
-    console.log(data, "data");
     data.results.sort(
       (a: any, b: any) => a.data.attributes.chapter - b.data.attributes.chapter
     );
@@ -71,38 +72,38 @@ export default function DetailManga(props: { manga: MangaDetail }) {
 }
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params as IParams;
-  const res = await axios.get(`${process.env.BASE_URL_DEX}/manga/${id}`);
-  const mangaInfo: Result = res.data;
+  try {
+    const { id } = context.params as IParams;
+    const res = await axios.get(`${process.env.BASE_URL_DEX}/manga/${id}`);
+    const mangaInfo: Result = res.data;
 
-  if (!mangaInfo) {
+    const coverId = mangaInfo.relationships.find(
+      (relation) => relation.type === "cover_art"
+    )?.id;
+    const coverInfo = await axios.get(
+      `${process.env.BASE_URL_DEX}/cover/${coverId}`
+    );
+    const fileName = coverInfo.data.data.attributes.fileName;
+
+    const tags = mangaInfo.data.attributes.tags.map((tag: Tag) => {
+      return { id: tag.id, name: tag.attributes.name.en };
+    });
+
+    return {
+      props: {
+        manga: {
+          id: mangaInfo.data.id,
+          title: mangaInfo.data.attributes.title.en,
+          description: mangaInfo.data.attributes.description.en,
+          tags,
+          urlImage: `${process.env.BASE_URL_IMG}/${mangaInfo.data.id}/${fileName}`,
+          status: mangaInfo.data.attributes.status,
+        },
+      },
+    };
+  } catch (err) {
     return {
       notFound: true,
     };
   }
-
-  const coverId = mangaInfo.relationships.find(
-    (relation) => relation.type === "cover_art"
-  )?.id;
-  const coverInfo = await axios.get(
-    `${process.env.BASE_URL_DEX}/cover/${coverId}`
-  );
-  const fileName = coverInfo.data.data.attributes.fileName;
-
-  const tags = mangaInfo.data.attributes.tags.map((tag: Tag) => {
-    return { id: tag.id, name: tag.attributes.name.en };
-  });
-
-  return {
-    props: {
-      manga: {
-        id: mangaInfo.data.id,
-        title: mangaInfo.data.attributes.title.en,
-        description: mangaInfo.data.attributes.description.en,
-        tags,
-        urlImage: `${process.env.BASE_URL_IMG}/${mangaInfo.data.id}/${fileName}`,
-        status: mangaInfo.data.attributes.status,
-      },
-    },
-  };
 };
