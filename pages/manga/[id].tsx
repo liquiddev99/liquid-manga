@@ -19,15 +19,13 @@ interface MangaDetail extends Manga {
 export default function DetailManga(props: { manga: MangaDetail }) {
   const { manga } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
-  const { data, error } = useSWR(
-    `https://api.mangadex.org/chapter?manga=${manga.id}&limit=100&translatedLanguage[]=en`,
-    fetcher
-  );
+  const { data, error } = useSWR(`/api/manga/${manga.id}`, fetcher);
   if (data) {
-    data.results.sort(
+    console.log(data, "data");
+    data.data.results.sort(
       (a: any, b: any) => a.data.attributes.chapter - b.data.attributes.chapter
     );
-    data.results.map((result: any) =>
+    data.data.results.map((result: any) =>
       console.log(result.data.attributes.chapter)
     );
   }
@@ -55,7 +53,7 @@ export default function DetailManga(props: { manga: MangaDetail }) {
         </p>
         <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
           {data &&
-            data.results.map((result: any) => (
+            data.data.results.map((result: any) => (
               <Link key={result.data.id} href={`/chapter/${result.data.id}`}>
                 <a>
                   <div className="py-1">
