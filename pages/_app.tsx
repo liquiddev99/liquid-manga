@@ -1,7 +1,16 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
+import type { AppProps } from "next/app";
+import "tailwindcss/tailwind.css";
+// import "../dist/styles.css";
+import "tailwindcss/tailwind.css";
+import "../src/styles.css";
+
+import LayoutPage from "../components/layout/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <LayoutPage>
+      <Component {...pageProps} />
+    </LayoutPage>
+  );
 }
-export default MyApp
+export default MyApp;
