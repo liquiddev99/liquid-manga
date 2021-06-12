@@ -22,10 +22,10 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   const { data, error } = useSWR(`/api/manga/${manga.id}`, fetcher);
   if (data) {
     console.log(data, "data");
-    data.data.results.sort(
+    data.results.sort(
       (a: any, b: any) => a.data.attributes.chapter - b.data.attributes.chapter
     );
-    data.data.results.map((result: any) =>
+    data.results.map((result: any) =>
       console.log(result.data.attributes.chapter)
     );
   }
@@ -53,7 +53,7 @@ export default function DetailManga(props: { manga: MangaDetail }) {
         </p>
         <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
           {data &&
-            data.data.results.map((result: any) => (
+            data.results.map((result: any) => (
               <Link key={result.data.id} href={`/chapter/${result.data.id}`}>
                 <a>
                   <div className="py-1">

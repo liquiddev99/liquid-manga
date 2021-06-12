@@ -5,8 +5,6 @@ import axios from "axios";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   const { id } = req.query;
   console.log(req.query.id);
-  const response = await axios.get(
-    `https://api.mangadex.org/chapter?manga=${id}&limit=100&translatedLanguage[]=en`
-  );
+  const response = await axios.get(`https://api.mangadex.org/chapter/${id}`);
   res.status(200).json(response.data);
 };
