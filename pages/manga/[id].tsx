@@ -8,6 +8,7 @@ import useSWR from "swr";
 
 import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
 import NotFound from "../../components/error/NotFound";
+import { getListChapter } from "../../helpers/getMangaInfo";
 
 interface IParams extends ParsedUrlQuery {
   id: string;
@@ -23,30 +24,12 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
   useEffect(() => {
-    axios.get(`/api/manga/${manga.id}?offset=0`).then((res) => {
-      const data = res.data;
-      const { total } = data;
-      const count = Math.floor(total / 100);
-      let listChapter: Chapter[] = [];
-      const promises = [];
-      console.log(count);
-      listChapter = listChapter.concat(data.results);
-      for (let i = 1; i <= count; i++) {
-        promises.push(
-          axios.get(`/api/manga/${manga.id}?offset=${i * 100}`).then((res) => {
-            listChapter = listChapter.concat(res.data.results);
-          })
-        );
-      }
-      Promise.all(promises).then(() => {
-        console.log(listChapter);
-        listChapter.sort(
-          (a: Chapter, b: Chapter) =>
-            Number(a.data.attributes.chapter) -
-            Number(b.data.attributes.chapter)
-        );
-        setChapters(listChapter);
-      });
+    const getChapters = async () => {
+      const listChapter = await getListChapter(manga.id);
+      return listChapter;
+    };
+    getChapters().then((data) => {
+      setChapters(data);
     });
   }, []);
 

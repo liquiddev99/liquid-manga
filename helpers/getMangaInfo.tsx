@@ -1,4 +1,10 @@
-import { ICoverInfo, Result } from "../interfaces/intefaces";
+import axios from "axios";
+
+import { ICoverInfo, Result, Chapter, Manga } from "../interfaces/intefaces";
+
+interface MangaDetail extends Manga {
+  tags: [{ id: string; name: string }];
+}
 
 export const getCoverIds = (listManga: Result[]) => {
   const coverIds = listManga.map((manga: Result) => {
@@ -33,4 +39,30 @@ export const getListManga = (
     };
   });
   return listManga;
+};
+
+export const getListChapter = async (mangaId: string) => {
+  const res = await axios.get(`/api/manga/${mangaId}?offset=0`);
+
+  const data = res.data;
+  const { total } = data;
+  const count = Math.floor(total / 100);
+  let listChapter: Chapter[] = [];
+  const promises = [];
+  listChapter = listChapter.concat(data.results);
+
+  for (let i = 1; i <= count; i++) {
+    promises.push(
+      axios.get(`/api/manga/${mangaId}?offset=${i * 100}`).then((res) => {
+        listChapter = listChapter.concat(res.data.results);
+      })
+    );
+  }
+
+  await Promise.all(promises);
+  listChapter.sort(
+    (a: Chapter, b: Chapter) =>
+      Number(a.data.attributes.chapter) - Number(b.data.attributes.chapter)
+  );
+  return listChapter;
 };
