@@ -16,7 +16,8 @@ export default function Search() {
   const { data, error } = useSWR(`/api/manga/search?title=${title}`, fetcher);
 
   useEffect(() => {
-    if (!data) return;
+    if (!data || !data.results.length) return;
+    console.log(data);
     const coverIds = getCoverIds(data.results);
     const queryIds = "?ids[]=" + coverIds.join("&ids[]=");
     axios
@@ -31,7 +32,14 @@ export default function Search() {
   }, [data]);
 
   if (!data) {
-    return <div className="text-white">No results match title {title}</div>;
+    return <div className="text-white h-screen">Loading...</div>;
+  }
+  if (!data.results.length) {
+    return (
+      <div className="text-white h-screen text-center mt-10">
+        No results match title {title}
+      </div>
+    );
   }
 
   return (
