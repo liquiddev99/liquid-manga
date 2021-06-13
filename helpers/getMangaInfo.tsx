@@ -34,7 +34,7 @@ export const getListManga = (
       id: result.data.id,
       title: result.data.attributes.title.en,
       description: result.data.attributes.description.en,
-      urlImage: `${process.env.BASE_URL_IMG}/${result.data.id}/${coverArt.data.attributes.fileName}`,
+      urlImage: `https://uploads.mangadex.org/covers/${result.data.id}/${coverArt.data.attributes.fileName}`,
       status: result.data.attributes.status,
     };
   });

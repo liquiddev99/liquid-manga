@@ -26,6 +26,7 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   useEffect(() => {
     const getChapters = async () => {
       const listChapter = await getListChapter(manga.id);
+      console.log(listChapter, "listChapter");
       return listChapter;
     };
     getChapters().then((data) => {

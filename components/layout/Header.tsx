@@ -1,12 +1,14 @@
-import { MouseEvent } from "react";
+import { useState, MouseEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
 function Header() {
+  const [input, setInput] = useState("");
   const router = useRouter();
   const onSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
-    router.push("/search");
+    if (!input) return;
+    router.push(`/search?title=${input}`);
   };
 
   return (
@@ -49,6 +51,8 @@ function Header() {
             <input
               placeholder="Search"
               className="text-gray-700 py-1 px-2 rounded outline-none border-none"
+              onChange={(e) => setInput(e.target.value)}
+              value={input}
             />
             <button type="submit" className="px-2">
               <svg
