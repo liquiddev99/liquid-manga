@@ -86,7 +86,7 @@ export default function DetailManga() {
                   {tag.name}
                 </div>
               ))}
-              <p>{manga.description}</p>
+              <p className="line-clamp-10">{manga.description}</p>
             </div>
           </>
         ) : (

@@ -8,6 +8,9 @@ module.exports = {
         middle: "#203a43",
         bottom: "#2c5364",
       },
+      lineClamp: {
+        10: "10",
+      },
       fontFamily: {
         dancing: ["Dancing Script, cursive"],
       },
