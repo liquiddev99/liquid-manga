@@ -17,6 +17,7 @@ export default function Search() {
   useEffect(() => {
     setLoading(true);
     setListManga([]);
+    setNotFound(false);
     axios.get(`/api/manga/search?title=${title}`).then((res) => {
       const data = res.data;
       setLoading(false);
@@ -43,7 +44,7 @@ export default function Search() {
       <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
         Result
       </p>
-      <div className="grid grid-cols-6 gap-6 mt-5 min-h-screen">
+      <div className="grid grid-cols-6 gap-6 mt-5">
         {listManga.length
           ? listManga.map((manga: Manga) => (
               <Link key={manga.id} href={`/manga/${manga.id}`}>
@@ -53,9 +54,11 @@ export default function Search() {
               </Link>
             ))
           : null}
-        {loading && <p className="text-white col-span-full">Loading...</p>}
+        {loading && (
+          <p className="text-white col-span-full h-screen">Loading...</p>
+        )}
         {notFound && (
-          <p className="text-white col-span-full">
+          <p className="text-white col-span-full h-screen">
             No results match title {title}
           </p>
         )}
