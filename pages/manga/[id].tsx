@@ -1,14 +1,11 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import axios from "axios";
 import Image from "next/image";
-import useSWR from "swr";
 
 import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
-import NotFound from "../../components/error/NotFound";
 import { getListChapter } from "../../helpers/getMangaInfo";
 
 interface IParams extends ParsedUrlQuery {
@@ -21,14 +18,12 @@ interface MangaDetail extends Manga {
 
 export default function DetailManga() {
   const router = useRouter();
-  console.log(router.query);
   const id = router.query.id as string;
   const [manga, setManga] = useState<MangaDetail>();
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [language, setLanguage] = useState("en");
-  const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
   useEffect(() => {
     if (!id) return;
@@ -63,7 +58,7 @@ export default function DetailManga() {
   // if (error && error.response.status === 404) return <NotFound />;
 
   return (
-    <div className="w-11/12 mx-auto text-white">
+    <div className="text-white container">
       <div className="w-full text-white flex justify-between py-10">
         {manga && (
           <>
@@ -143,40 +138,3 @@ export default function DetailManga() {
     </div>
   );
 }
-
-// export const getServerSideProps: GetServerSideProps = async (context) => {
-//   try {
-//     const { id } = context.params as IParams;
-//     const res = await axios.get(`${process.env.BASE_URL_DEX}/manga/${id}`);
-//     const mangaInfo: Result = res.data;
-
-//     const coverId = mangaInfo.relationships.find(
-//       (relation) => relation.type === "cover_art"
-//     )?.id;
-//     const coverInfo = await axios.get(
-//       `${process.env.BASE_URL_DEX}/cover/${coverId}`
-//     );
-//     const fileName = coverInfo.data.data.attributes.fileName;
-
-//     const tags = mangaInfo.data.attributes.tags.map((tag: Tag) => {
-//       return { id: tag.id, name: tag.attributes.name.en };
-//     });
-
-//     return {
-//       props: {
-//         manga: {
-//           id: mangaInfo.data.id,
-//           title: mangaInfo.data.attributes.title.en,
-//           description: mangaInfo.data.attributes.description.en,
-//           tags,
-//           urlImage: `${process.env.BASE_URL_IMG}/${mangaInfo.data.id}/${fileName}`,
-//           status: mangaInfo.data.attributes.status,
-//         },
-//       },
-//     };
-//   } catch (err) {
-//     return {
-//       notFound: true,
-//     };
-//   }
-// };

@@ -42,13 +42,13 @@ export default function ChapterDetail(props: {
   // if (error && error.response.status === 404) return <NotFound />;
   if (error) {
     return (
-      <p className="text-white h-screen my-2 w-11/12 mx-auto">
+      <p className="text-white h-screen my-2 container">
         Can't find this chapter
       </p>
     );
   }
   return (
-    <div className="w-11/12 mx-auto flex flex-col">
+    <div className="container flex flex-col">
       {data &&
         data.data.attributes.data.map((fileName: string) => (
           <div className="my-2 w-full h-auto" key={fileName}>

@@ -40,7 +40,7 @@ export default function Search() {
   }, [title]);
 
   return (
-    <div className="w-11/12 mx-auto">
+    <div className="container">
       <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
         Result
       </p>

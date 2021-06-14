@@ -2,12 +2,12 @@ import Head from "next/head";
 
 function AdvancedSearch() {
   return (
-    <div>
+    <>
       <Head>
         <title>Liquid Manga | Advanced Search</title>
       </Head>
-      AdvancedSearch
-    </div>
+      <div className="container text-white">AdvancedSearch</div>
+    </>
   );
 }
 

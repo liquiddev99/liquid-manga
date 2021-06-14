@@ -80,10 +80,7 @@ export default function Home(props: IPropsListManga) {
         <title>Liquid Manga</title>
       </Head>
       <div className="relative bg-gradient-to-b from-top via-middle to-bottom">
-        <div
-          ref={viewportRef}
-          className="overflow-hidden pt-4 pb-10 mx-auto w-11/12"
-        >
+        <div ref={viewportRef} className="overflow-hidden pt-4 pb-10 container">
           <div
             onMouseEnter={() => setPause(true)}
             onMouseLeave={() => setPause(false)}

@@ -8,6 +8,9 @@
 }
 
 @layer components {
+  .container {
+    @apply mx-auto max-w-screen-xl w-11/12;
+  }
   .link {
     @apply text-white text-base ml-8 flex items-center;
   }
