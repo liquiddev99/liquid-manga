@@ -17,8 +17,8 @@ export default function Search() {
   useEffect(() => {
     setLoading(true);
     setListManga([]);
-    setNotFound(false);
     axios.get(`/api/manga/search?title=${title}`).then((res) => {
+      setNotFound(false);
       const data = res.data;
       setLoading(false);
       if (!data.results.length) {
