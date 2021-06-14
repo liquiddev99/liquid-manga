@@ -32,7 +32,6 @@ export default function DetailManga(props: { manga: MangaDetail }) {
       return listChapter;
     };
     getChapters().then((data) => {
-      console.log(data);
       setLoading(false);
       if (!data.length) {
         setNotFound(true);
