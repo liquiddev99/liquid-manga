@@ -5,7 +5,7 @@ import ListManga from "../manga/ListManga";
 
 export default function LastUpdated(props: { mangaSafe: Manga[] }) {
   return (
-    <div className="mx-auto w-11/12">
+    <div className="container">
       <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">
         Last Updated
       </p>

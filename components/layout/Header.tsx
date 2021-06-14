@@ -13,7 +13,7 @@ function Header() {
 
   return (
     <div className="w-full bg-top">
-      <div className="flex mx-auto w-11/12 py-3 justify-between items-center">
+      <div className="container flex py-3 justify-between items-center">
         <Link href="/">
           <a className="text-white text-4xl font-dancing">Liquid Manga</a>
         </Link>
