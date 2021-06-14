@@ -35,7 +35,6 @@ export default function ChapterDetail(props: {
     getChapters().then((res) => {
       setChapters(res);
     });
-    console.log(chapters);
   }, [data]);
   // if (error && error.response.status === 404) return <NotFound />;
 
@@ -47,15 +46,18 @@ export default function ChapterDetail(props: {
     <div className="w-11/12 mx-auto flex flex-col items-center">
       {data &&
         data.data.attributes.data.map((fileName: string) => (
-          <div className="m-3" key={fileName}>
-            <Image
-              width={1000}
-              height={1200}
-              src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
-              alt="fetching image, please wait..."
-              layout="intrinsic"
-              priority={true}
-            />
+          <div className="m-2 w-full h-auto" key={fileName}>
+            <div className="aspect-w-2 aspect-h-3">
+              <Image
+                // width={1000}
+                // height={1200}
+                src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
+                alt="fetching image, please wait..."
+                layout="fill"
+                priority={true}
+                objectFit="contain"
+              />
+            </div>
           </div>
         ))}
     </div>
