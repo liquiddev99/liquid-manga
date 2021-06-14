@@ -46,8 +46,8 @@ export default function ChapterDetail(props: {
     <div className="w-11/12 mx-auto flex flex-col items-center">
       {data &&
         data.data.attributes.data.map((fileName: string) => (
-          <div className="m-2 w-full h-auto" key={fileName}>
-            <div className="aspect-w-2 aspect-h-3">
+          <div className="my-2 w-full h-auto" key={fileName}>
+            <div className="aspect-w-3 aspect-h-4">
               <Image
                 // width={1000}
                 // height={1200}

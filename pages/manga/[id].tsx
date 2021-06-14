@@ -39,7 +39,12 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   return (
     <div className="w-11/12 mx-auto text-white">
       <div className="w-full text-white flex justify-between py-10">
-        <Image src={manga.urlImage} width={300} height={400} />
+        <Image
+          src={manga.urlImage}
+          width={300}
+          height={400}
+          objectFit="contain"
+        />
         <div className="h-5/6 w-2/3">
           <p className="text-3xl mt-5 mb-2">{manga.title}</p>
           <p className="capitalize text-gray-300 mb-2">{manga.status}</p>
