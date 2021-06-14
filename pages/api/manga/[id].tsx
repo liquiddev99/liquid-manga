@@ -23,9 +23,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const altTitles = mangaInfo.data.attributes.altTitles
       .map((title: { en: string }) => title.en)
       .slice(0, 3)
-      .join(", ");
-
-    console.log(altTitles);
+      .join("; ");
 
     res.status(200).json({
       id,
