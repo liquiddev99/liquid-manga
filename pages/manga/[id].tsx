@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, ChangeEvent } from "react";
 import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { ParsedUrlQuery } from "querystring";
@@ -22,12 +22,20 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [language, setLanguage] = useState("en");
   const { manga } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setLanguage(e.target.value);
+  };
+
   useEffect(() => {
+    console.log("re-run");
+    setLoading(true);
+    setChapters([]);
     const getChapters = async () => {
-      const listChapter = await getListChapter(manga.id);
+      const listChapter = await getListChapter(manga.id, language);
       console.log(listChapter, "listChapter");
       return listChapter;
     };
@@ -38,7 +46,7 @@ export default function DetailManga(props: { manga: MangaDetail }) {
       }
       setChapters(data);
     });
-  }, []);
+  }, [language]);
 
   // if (error && error.response.status === 404) return <NotFound />;
 
@@ -69,6 +77,15 @@ export default function DetailManga(props: { manga: MangaDetail }) {
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">
           List Chapter
         </p>
+        <select
+          className="text-black mb-2 ml-10 mt-5 p-1"
+          name="language"
+          onChange={handleChange}
+          value={language}
+        >
+          <option value="en">English</option>
+          <option value="vi">Vietnam</option>
+        </select>
         <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
           {chapters &&
             chapters.map((chapter: Chapter) => {
@@ -99,7 +116,12 @@ export default function DetailManga(props: { manga: MangaDetail }) {
               );
             })}
           {loading && <p>Loading...</p>}
-          {notFound && <p>No chapters found</p>}
+          {notFound && (
+            <p>
+              No chapters found in{" "}
+              {language === "vi" ? "Vietnamese" : "English"}
+            </p>
+          )}
         </div>
       </div>
     </div>

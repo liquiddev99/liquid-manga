@@ -4,7 +4,6 @@ import {
   FaLinkedin,
   FaTwitterSquare,
 } from "react-icons/fa";
-import { AiFillGoogleCircle, AiFillTwitterCircle } from "react-icons/ai";
 
 function Footer() {
   return (
