@@ -20,6 +20,8 @@ interface MangaDetail extends Manga {
 
 export default function DetailManga(props: { manga: MangaDetail }) {
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const { manga } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
@@ -30,6 +32,11 @@ export default function DetailManga(props: { manga: MangaDetail }) {
       return listChapter;
     };
     getChapters().then((data) => {
+      console.log(data);
+      setLoading(false);
+      if (!data.length) {
+        setNotFound(true);
+      }
       setChapters(data);
     });
   }, []);
@@ -92,6 +99,8 @@ export default function DetailManga(props: { manga: MangaDetail }) {
                 </Link>
               );
             })}
+          {loading && <p>Loading...</p>}
+          {notFound && <p>No chapters found</p>}
         </div>
       </div>
     </div>
