@@ -31,9 +31,9 @@ export default function DetailManga(props: { manga: MangaDetail }) {
   };
 
   useEffect(() => {
-    console.log("re-run");
     setLoading(true);
     setChapters([]);
+    setNotFound(false);
     const getChapters = async () => {
       const listChapter = await getListChapter(manga.id, language);
       console.log(listChapter, "listChapter");
