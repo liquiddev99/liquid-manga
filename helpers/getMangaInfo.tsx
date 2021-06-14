@@ -43,7 +43,7 @@ export const getListManga = (
 
 export const getListChapter = async (mangaId: string, language: string) => {
   const res = await axios.get(
-    `/api/manga/${mangaId}?offset=0&language=${language}`
+    `/api/chapter/manga?mangaId=${mangaId}&offset=0&language=${language}`
   );
 
   const data = res.data;
@@ -56,7 +56,11 @@ export const getListChapter = async (mangaId: string, language: string) => {
   for (let i = 1; i <= count; i++) {
     promises.push(
       axios
-        .get(`/api/manga/${mangaId}?offset=${i * 100}&language=${language}`)
+        .get(
+          `/api/chapter/manga?mangaId=${mangaId}&offset=${
+            i * 100
+          }&language=${language}`
+        )
         .then((res) => {
           listChapter = listChapter.concat(res.data.results);
         })
