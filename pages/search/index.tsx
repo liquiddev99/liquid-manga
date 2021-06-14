@@ -15,6 +15,8 @@ export default function Search() {
   const { title } = router.query;
 
   useEffect(() => {
+    setLoading(true);
+    setListManga([]);
     axios.get(`/api/manga/search?title=${title}`).then((res) => {
       const data = res.data;
       setLoading(false);

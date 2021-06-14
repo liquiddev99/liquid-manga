@@ -19,12 +19,15 @@ export default function ChapterDetail(props: {
   temp_token: string;
 }) {
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [notFound, setNotFound] = useState(false);
   const { id, base_url, temp_token } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
 
   useEffect(() => {
     if (!data) return;
+    setLoading(false);
     const mangaId = data.relationships.find(
       (relation: any) => relation.type === "manga"
     ).id;
@@ -37,22 +40,24 @@ export default function ChapterDetail(props: {
     });
   }, [data]);
   // if (error && error.response.status === 404) return <NotFound />;
-
-  if (!data) {
-    return <div className="h-screen">Loading...</div>;
+  if (error) {
+    return (
+      <p className="text-white h-screen my-2 w-11/12 mx-auto">
+        Can't find this chapter
+      </p>
+    );
   }
-
   return (
-    <div className="w-11/12 mx-auto flex flex-col items-center">
+    <div className="w-11/12 mx-auto flex flex-col">
       {data &&
         data.data.attributes.data.map((fileName: string) => (
           <div className="my-2 w-full h-auto" key={fileName}>
-            <div className="aspect-w-3 aspect-h-4">
+            <div className="aspect-w-3 aspect-h-4 text-white">
               <Image
                 // width={1000}
                 // height={1200}
                 src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
-                alt="fetching image, please wait..."
+                alt="fetching image..."
                 layout="fill"
                 priority={true}
                 objectFit="contain"
@@ -60,6 +65,7 @@ export default function ChapterDetail(props: {
             </div>
           </div>
         ))}
+      {loading && <p className="text-white h-screen my-2">Loading...</p>}
     </div>
   );
 }
