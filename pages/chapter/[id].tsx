@@ -32,7 +32,7 @@ export default function ChapterDetail(props: {
       (relation: any) => relation.type === "manga"
     ).id;
     const getChapters = async () => {
-      const listChapter = await getListChapter(mangaId);
+      const listChapter = await getListChapter(mangaId, "en");
       return listChapter;
     };
     getChapters().then((res) => {
