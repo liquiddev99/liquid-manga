@@ -21,6 +21,7 @@ interface MangaDetail extends Manga {
 
 export default function DetailManga() {
   const router = useRouter();
+  console.log(router.query);
   const id = router.query.id as string;
   const [manga, setManga] = useState<MangaDetail>();
   const [chapters, setChapters] = useState<Chapter[]>([]);
@@ -30,11 +31,11 @@ export default function DetailManga() {
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
   useEffect(() => {
+    if (!id) return;
     axios.get(`/api/manga/${id}`).then((res) => {
-      console.log(res.data);
       setManga(res.data);
     });
-  }, []);
+  }, [id]);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setLanguage(e.target.value);
@@ -45,6 +46,7 @@ export default function DetailManga() {
     setChapters([]);
     setNotFound(false);
     const getChapters = async () => {
+      if (!id) return [];
       const listChapter = await getListChapter(id, language);
       console.log(listChapter, "listChapter");
       return listChapter;
@@ -56,7 +58,7 @@ export default function DetailManga() {
       }
       setChapters(data);
     });
-  }, [language]);
+  }, [language, id]);
 
   // if (error && error.response.status === 404) return <NotFound />;
 
