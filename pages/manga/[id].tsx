@@ -14,6 +14,7 @@ interface IParams extends ParsedUrlQuery {
 
 interface MangaDetail extends Manga {
   tags: [{ id: string; name: string }];
+  altTitles: string;
 }
 
 export default function DetailManga() {
@@ -70,7 +71,10 @@ export default function DetailManga() {
             />
             <div className="h-5/6 w-2/3">
               <p className="text-3xl mt-5 mb-2">{manga.title}</p>
-              <p className="capitalize text-gray-300 mb-2">{manga.status}</p>
+              <p className="capitalize text-gray-300">{manga.status}</p>
+              <p className="capitalize text-gray-300 mb-2">
+                Alt Titles: {manga.altTitles}
+              </p>
               {manga.tags.map((tag) => (
                 <div
                   key={tag.id}

@@ -30,6 +30,7 @@ export type Result = {
       description: { en: string };
       status: string;
       tags: [];
+      altTitles: [];
     };
   };
   relationships: [{ id: string; type: string }];

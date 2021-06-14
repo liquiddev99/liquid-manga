@@ -20,10 +20,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     const tags = mangaInfo.data.attributes.tags.map((tag: Tag) => {
       return { id: tag.id, name: tag.attributes.name.en };
     });
+    const altTitles = mangaInfo.data.attributes.altTitles
+      .map((title: { en: string }) => title.en)
+      .slice(0, 3)
+      .join(", ");
+
+    console.log(altTitles);
 
     res.status(200).json({
       id,
       title: mangaInfo.data.attributes.title.en,
+      altTitles,
       description: mangaInfo.data.attributes.description.en,
       tags,
       urlImage: `https://uploads.mangadex.org/covers/${mangaInfo.data.id}/${fileName}`,
