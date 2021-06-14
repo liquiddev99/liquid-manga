@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   FaFacebookSquare,
   FaGooglePlusSquare,
@@ -33,10 +34,21 @@ function Footer() {
           </div>
         </div>
         <div className="flex justify-center">
-          <FaFacebookSquare className="text-white text-4xl" />
-          <FaGooglePlusSquare className="text-white text-4xl ml-2" />
-          <FaTwitterSquare className="text-white text-4xl ml-2" />
-          <FaLinkedin className="text-white text-4xl ml-2" />
+          <a
+            href="https://www.facebook.com/profile.php?id=100022475362783"
+            target="_blank"
+          >
+            <FaFacebookSquare className="text-white text-4xl" />
+          </a>
+          <a>
+            <FaGooglePlusSquare className="text-white text-4xl ml-2" />
+          </a>
+          <a>
+            <FaTwitterSquare className="text-white text-4xl ml-2" />
+          </a>
+          <a href="https://www.linkedin.com/in/liquid-career/" target="_blank">
+            <FaLinkedin className="text-white text-4xl ml-2" />
+          </a>
         </div>
       </div>
       <p className="text-center pb-7 text-sm">
