@@ -21,8 +21,8 @@ export default function Search() {
     axios.get(`/api/manga/search?title=${title}`).then((res) => {
       setNotFound(false);
       const data = res.data;
-      setLoading(false);
       if (!data.results.length) {
+        setLoading(false);
         setNotFound(true);
         return;
       }
@@ -36,6 +36,9 @@ export default function Search() {
         })
         .catch(() => {
           return "";
+        })
+        .finally(() => {
+          setLoading(false);
         });
     });
   }, [title]);
@@ -46,19 +49,21 @@ export default function Search() {
         Result
       </p>
       <div className="grid grid-cols-6 gap-6 mt-5">
-        {listManga.length ? (
-          listManga.map((manga: Manga) => (
-            <Link key={manga.id} href={`/manga/${manga.id}`}>
-              <a>
-                <ListManga manga={manga} />
-              </a>
-            </Link>
-          ))
-        ) : (
-          <ListMangaSke />
-        )}
+        {listManga.length
+          ? listManga.map((manga: Manga) => (
+              <Link key={manga.id} href={`/manga/${manga.id}`}>
+                <a>
+                  <ListManga manga={manga} />
+                </a>
+              </Link>
+            ))
+          : null}
         {loading && (
-          <p className="text-white col-span-full h-screen">Loading...</p>
+          <>
+            {Array.from(Array(12).keys()).map((_, index) => (
+              <ListMangaSke key={index} />
+            ))}
+          </>
         )}
         {notFound && (
           <p className="text-white col-span-full h-screen">

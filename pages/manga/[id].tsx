@@ -60,13 +60,16 @@ export default function DetailManga() {
       console.log(listChapter, "listChapter");
       return listChapter;
     };
-    getChapters().then((data) => {
-      setLoading(false);
-      if (!data.length) {
+    getChapters()
+      .then((data) => {
+        setChapters(data);
+      })
+      .catch(() => {
         setNotFound(true);
-      }
-      setChapters(data);
-    });
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, [language, id]);
 
   // if (error && error.response.status === 404) return <NotFound />;
