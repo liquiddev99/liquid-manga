@@ -22,6 +22,8 @@ export default function DetailManga() {
   const router = useRouter();
   const id = router.query.id as string;
   const [manga, setManga] = useState<MangaDetail>();
+  const [notFoundManga, setNotFoundManga] = useState(false);
+  const [loadingManga, setLoadingManga] = useState(true);
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
@@ -29,9 +31,19 @@ export default function DetailManga() {
 
   useEffect(() => {
     if (!id) return;
-    axios.get(`/api/manga/${id}`).then((res) => {
-      setManga(res.data);
-    });
+    setNotFoundManga(false);
+    setLoadingManga(true);
+    axios
+      .get(`/api/manga/${id}`)
+      .then((res) => {
+        setManga(res.data);
+      })
+      .catch((err) => {
+        setNotFoundManga(true);
+      })
+      .finally(() => {
+        setLoadingManga(false);
+      });
   }, [id]);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -62,7 +74,7 @@ export default function DetailManga() {
   return (
     <div className="text-white container">
       <div className="w-full text-white flex justify-between py-10">
-        {manga ? (
+        {!loadingManga && manga && (
           <>
             <Image
               src={manga.urlImage}
@@ -89,9 +101,9 @@ export default function DetailManga() {
               <p className="line-clamp-10">{manga.description}</p>
             </div>
           </>
-        ) : (
-          <DetailMangaSke />
         )}
+        {notFoundManga && <p>Manga Not Found</p>}
+        {loadingManga && <DetailMangaSke />}
       </div>
       <div>
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">

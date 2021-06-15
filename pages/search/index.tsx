@@ -6,6 +6,7 @@ import axios from "axios";
 import ListManga from "../../components/manga/ListManga";
 import { Manga } from "../../interfaces/intefaces";
 import { getCoverIds, getListManga } from "../../helpers/getMangaInfo";
+import ListMangaSke from "../../components/skeleton/ListMangaSke";
 
 export default function Search() {
   const [listManga, setListManga] = useState<Manga[]>([]);
@@ -45,15 +46,17 @@ export default function Search() {
         Result
       </p>
       <div className="grid grid-cols-6 gap-6 mt-5">
-        {listManga.length
-          ? listManga.map((manga: Manga) => (
-              <Link key={manga.id} href={`/manga/${manga.id}`}>
-                <a>
-                  <ListManga manga={manga} />
-                </a>
-              </Link>
-            ))
-          : null}
+        {listManga.length ? (
+          listManga.map((manga: Manga) => (
+            <Link key={manga.id} href={`/manga/${manga.id}`}>
+              <a>
+                <ListManga manga={manga} />
+              </a>
+            </Link>
+          ))
+        ) : (
+          <ListMangaSke />
+        )}
         {loading && (
           <p className="text-white col-span-full h-screen">Loading...</p>
         )}
