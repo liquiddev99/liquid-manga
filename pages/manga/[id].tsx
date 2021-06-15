@@ -62,6 +62,9 @@ export default function DetailManga() {
     };
     getChapters()
       .then((data) => {
+        if (!data.length) {
+          setNotFound(true);
+        }
         setChapters(data);
       })
       .catch(() => {

@@ -72,5 +72,12 @@ export const getListChapter = async (mangaId: string, language: string) => {
     (a: Chapter, b: Chapter) =>
       Number(a.data.attributes.chapter) - Number(b.data.attributes.chapter)
   );
+  listChapter = listChapter.filter((chapter, index, array) => {
+    if (!array[index + 1]) return true;
+    return (
+      chapter.data.attributes.chapter !==
+      array[index + 1].data.attributes.chapter
+    );
+  });
   return listChapter;
 };
