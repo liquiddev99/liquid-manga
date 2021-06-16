@@ -14,10 +14,16 @@ module.exports = {
       fontFamily: {
         dancing: ["Dancing Script, cursive"],
       },
+      width: {
+        "half-screen": "50vw",
+        "3-quarter-screen": "75vw",
+      },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      display: ["group-hover"],
+    },
   },
   plugins: [
     require("@tailwindcss/line-clamp"),

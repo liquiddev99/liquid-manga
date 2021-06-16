@@ -5,6 +5,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { useEmblaCarousel } from "embla-carousel/react";
 import axios from "axios";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/outline";
 
 import LastUpdated from "../components/home/LastUpdated";
 import {
@@ -123,39 +124,13 @@ export default function Home(props: IPropsListManga) {
           onClick={() => scrollPrev()}
           className="absolute top-2/4 text-white z-10 left-4"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+          <ChevronLeftIcon className="h-6 w-6" />
         </button>
         <button
           onClick={() => scrollNext()}
           className="absolute top-2/4 text-white z-10 right-4"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+          <ChevronRightIcon className="h-6 w-6" />
         </button>
       </div>
       <LastUpdated mangaSafe={props.mangaSafe} />

@@ -5,11 +5,10 @@ import axios from "axios";
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     let { title, offset } = req.query;
-    console.log(title, "tilte");
+    console.log(req.query);
     const response = await axios.get(
       `https://api.mangadex.org/manga?title=${title}&limit=100`
     );
-    console.log(response.data, "searched manga");
     res.status(200).json(response.data);
   } catch (err) {
     console.log(err.response, "error response");

@@ -1,15 +1,39 @@
-import { useState, MouseEvent } from "react";
+import { useState, MouseEvent, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
+import axios from "axios";
+
+interface Tag {
+  result: string;
+  data: {
+    attributes: {
+      name: { en: string };
+    };
+    id: string;
+    type: string;
+  };
+}
 
 function Header() {
   const [input, setInput] = useState("");
+  const [tags, setTags] = useState([]);
   const router = useRouter();
   const onSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input) return;
     router.push(`/search?title=${input}`);
   };
+
+  useEffect(() => {
+    axios.get("https://api.mangadex.org/manga/tag").then((res) => {
+      const data = res.data;
+      data.sort((a: Tag, b: Tag) =>
+        a.data.attributes.name.en.localeCompare(b.data.attributes.name.en)
+      );
+      setTags(data);
+    });
+  }, []);
 
   return (
     <div className="w-full bg-top">
@@ -21,25 +45,28 @@ function Header() {
           <Link href="/">
             <a className="link">Home</a>
           </Link>
-          <Link href="#">
-            <a className="link">
+          <div className="relative group ml-8">
+            <div className="text-white text-base flex items-center cursor-pointer">
               Genres
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </a>
-          </Link>
+              <ChevronDownIcon className="h-5 w-5" />
+            </div>
+            <div className="bg-white rounded text-black absolute top-full hidden group-hover:block w-3-quarter-screen z-10 -right-96">
+              <div className="w-full grid grid-cols-6 gap-2 my-4">
+                {tags &&
+                  tags.map((tag: Tag) => (
+                    <Link href={`/search/includedTags[]=${tag.data.id}`}>
+                      <a className="text-center">
+                        {tag.data.attributes.name.en}
+                      </a>
+                    </Link>
+                  ))}
+
+                <Link href="/search/status[]=completed">
+                  <a className="text-center">Full</a>
+                </Link>
+              </div>
+            </div>
+          </div>
           <Link href="/advanced-search">
             <a className="link">Advanced Search</a>
           </Link>
@@ -55,20 +82,7 @@ function Header() {
               value={input}
             />
             <button type="submit" className="px-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
+              <SearchIcon className="h-5 w-5" />
             </button>
           </form>
         </div>
