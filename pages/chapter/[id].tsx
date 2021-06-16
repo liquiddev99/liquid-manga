@@ -11,16 +11,12 @@ import { getListChapter } from "../../helpers/getMangaInfo";
 import NotFound from "../../components/error/NotFound";
 import { Chapter } from "../../interfaces/intefaces";
 
-interface IParams extends ParsedUrlQuery {
-  id: string;
-}
-
 export default function ChapterDetail(props: {
-  id: string;
   base_url: string;
   temp_token: string;
 }) {
   const router = useRouter();
+  const { id } = router.query;
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [mangaId, setMangaId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -28,7 +24,7 @@ export default function ChapterDetail(props: {
   const [disablePrev, setDisablePrev] = useState(false);
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { id, base_url, temp_token } = props;
+  const { base_url, temp_token } = props;
   const fetcher = (url: string) => axios.get(url).then((res) => res.data);
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
 
@@ -212,11 +208,9 @@ export default function ChapterDetail(props: {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.params as IParams;
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
-      id,
       base_url: process.env.BASE_URL,
       temp_token: process.env.TEMP_TOKEN,
     },
