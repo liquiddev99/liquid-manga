@@ -16,7 +16,9 @@ export default function ChapterDetail(props: {
   temp_token: string;
 }) {
   const router = useRouter();
-  const { id } = router.query;
+  let { id } = router.query;
+  let language = router.query.language as string;
+  language = language || "en";
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [mangaId, setMangaId] = useState("");
   const [loading, setLoading] = useState(true);
@@ -36,13 +38,13 @@ export default function ChapterDetail(props: {
     if (!chapters) return;
     if (!chapters[currentIndex - 1]) return;
     const previousId = chapters[currentIndex - 1].data.id;
-    router.push(`/chapter/${previousId}`);
+    router.push(`/chapter/${previousId}?language=${language}`);
   };
   const nextChapter = () => {
     if (!chapters) return;
     if (!chapters[currentIndex + 1]) return;
     const nextId = chapters[currentIndex + 1].data.id;
-    router.push(`/chapter/${nextId}`);
+    router.push(`/chapter/${nextId}?language=${language}`);
   };
 
   const backToManga = () => {
@@ -92,7 +94,7 @@ export default function ChapterDetail(props: {
     ).id;
     setMangaId(mangaId);
     const getChapters = async () => {
-      const listChapter = await getListChapter(mangaId, "en");
+      const listChapter = await getListChapter(mangaId, language);
       return listChapter;
     };
     getChapters().then((res) => {
@@ -128,12 +130,12 @@ export default function ChapterDetail(props: {
           </div>
           <select
             className="text-black w-2/5 h-9 p-2"
-            value={`/chapter/${id}`}
+            value={`/chapter/${id}?language=${language}`}
             onChange={handleChange}
           >
             {chapters.map((chapter: Chapter) => (
               <option
-                value={`/chapter/${chapter.data.id}`}
+                value={`/chapter/${chapter.data.id}?language=${language}`}
                 key={chapter.data.id}
               >
                 Chapter {chapter.data.attributes.chapter}
@@ -182,12 +184,12 @@ export default function ChapterDetail(props: {
           </div>
           <select
             className="text-black w-2/5 h-9 p-2"
-            value={`/chapter/${id}`}
+            value={`/chapter/${id}?language=${language}`}
             onChange={handleChange}
           >
             {chapters.map((chapter: Chapter) => (
               <option
-                value={`/chapter/${chapter.data.id}`}
+                value={`/chapter/${chapter.data.id}?language=${language}`}
                 key={chapter.data.id}
               >
                 Chapter {chapter.data.attributes.chapter}

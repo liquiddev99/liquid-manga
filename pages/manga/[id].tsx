@@ -131,7 +131,7 @@ export default function DetailManga() {
               return (
                 <Link
                   key={chapter.data.id}
-                  href={`/chapter/${chapter.data.id}`}
+                  href={`/chapter/${chapter.data.id}?language=${language}`}
                 >
                   <a>
                     <div className="py-1 px-4 flex justify-between">

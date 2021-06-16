@@ -41,7 +41,7 @@ export const getListManga = (
   return listManga;
 };
 
-export const getListChapter = async (mangaId: string, language: string) => {
+export const getListChapter = async (mangaId: string, language = "en") => {
   const res = await axios.get(
     `/api/chapter/manga?mangaId=${mangaId}&offset=0&language=${language}`
   );
