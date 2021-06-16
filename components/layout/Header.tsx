@@ -26,7 +26,7 @@ function Header() {
   };
 
   useEffect(() => {
-    axios.get("https://api.mangadex.org/manga/tag").then((res) => {
+    axios.get("/api/manga/tag").then((res) => {
       const data = res.data;
       data.sort((a: Tag, b: Tag) =>
         a.data.attributes.name.en.localeCompare(b.data.attributes.name.en)
@@ -54,7 +54,10 @@ function Header() {
               <div className="w-full grid grid-cols-6 gap-2 my-4">
                 {tags &&
                   tags.map((tag: Tag) => (
-                    <Link href={`/search/includedTags[]=${tag.data.id}`}>
+                    <Link
+                      key={tag.data.id}
+                      href={`/search/includedTags[]=${tag.data.id}`}
+                    >
                       <a className="text-center">
                         {tag.data.attributes.name.en}
                       </a>

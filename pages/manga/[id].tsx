@@ -1,17 +1,12 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ParsedUrlQuery } from "querystring";
 import axios from "axios";
 import Image from "next/image";
 
 import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
 import { getListChapter } from "../../helpers/getMangaInfo";
 import DetailMangaSke from "../../components/skeleton/DetailMangaSke";
-
-interface IParams extends ParsedUrlQuery {
-  id: string;
-}
 
 interface MangaDetail extends Manga {
   tags: [{ id: string; name: string }];
