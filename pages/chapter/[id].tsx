@@ -22,6 +22,7 @@ export default function ChapterDetail(props: {
 }) {
   const router = useRouter();
   const [chapters, setChapters] = useState<Chapter[]>([]);
+  const [mangaId, setMangaId] = useState("");
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
   const [disablePrev, setDisablePrev] = useState(false);
@@ -46,6 +47,11 @@ export default function ChapterDetail(props: {
     if (!chapters[currentIndex + 1]) return;
     const nextId = chapters[currentIndex + 1].data.id;
     router.push(`/chapter/${nextId}`);
+  };
+
+  const backToManga = () => {
+    if (!mangaId) return;
+    router.push(`/manga/${mangaId}`);
   };
 
   // const handleKeyDown = (e: any) => {
@@ -88,6 +94,7 @@ export default function ChapterDetail(props: {
     const mangaId = data.relationships.find(
       (relation: any) => relation.type === "manga"
     ).id;
+    setMangaId(mangaId);
     const getChapters = async () => {
       const listChapter = await getListChapter(mangaId, "en");
       return listChapter;
@@ -107,8 +114,14 @@ export default function ChapterDetail(props: {
   }
   return (
     <div className="container flex flex-col items-center min-h-screen">
-      {chapters && (
-        <div className="w-3/5 flex justify-center items-center my-5">
+      {!loading && chapters && (
+        <div className="w-full flex justify-center items-center my-5 relative">
+          <div
+            className="absolute left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
+            onClick={backToManga}
+          >
+            Manga Info
+          </div>
           <div
             className={`${
               disablePrev ? "bg-gray-400" : "bg-red-500 cursor-pointer"
@@ -117,12 +130,15 @@ export default function ChapterDetail(props: {
           >
             <ArrowLeftIcon className="h-5 w-5" />
           </div>
-          <select className="text-black w-3/5 h-9 p-2" onChange={handleChange}>
+          <select
+            className="text-black w-2/5 h-9 p-2"
+            value={`/chapter/${id}`}
+            onChange={handleChange}
+          >
             {chapters.map((chapter: Chapter) => (
               <option
                 value={`/chapter/${chapter.data.id}`}
                 key={chapter.data.id}
-                selected={chapter.data.id === id}
               >
                 Chapter {chapter.data.attributes.chapter}
               </option>
@@ -142,8 +158,6 @@ export default function ChapterDetail(props: {
           <div className="my-2 w-full h-auto" key={fileName}>
             <div className="aspect-w-3 aspect-h-4 text-white">
               <Image
-                // width={1000}
-                // height={1200}
                 src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
                 alt="fetching image..."
                 layout="fill"
@@ -153,6 +167,46 @@ export default function ChapterDetail(props: {
             </div>
           </div>
         ))}
+
+      {!loading && chapters && (
+        <div className="w-full flex justify-center items-center my-5 relative">
+          <div
+            className="absolute left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
+            onClick={backToManga}
+          >
+            Manga Info
+          </div>
+          <div
+            className={`${
+              disablePrev ? "bg-gray-400" : "bg-red-500 cursor-pointer"
+            } p-2`}
+            onClick={prevChapter}
+          >
+            <ArrowLeftIcon className="h-5 w-5" />
+          </div>
+          <select
+            className="text-black w-2/5 h-9 p-2"
+            value={`/chapter/${id}`}
+            onChange={handleChange}
+          >
+            {chapters.map((chapter: Chapter) => (
+              <option
+                value={`/chapter/${chapter.data.id}`}
+                key={chapter.data.id}
+              >
+                Chapter {chapter.data.attributes.chapter}
+              </option>
+            ))}
+          </select>
+          <div
+            className={`${
+              disableNext ? "bg-gray-400" : "bg-red-500 cursor-pointer"
+            } p-2`}
+          >
+            <ArrowRightIcon className="h-5 w-5" onClick={nextChapter} />
+          </div>
+        </div>
+      )}
       {loading && <p className="text-white h-screen my-2">Loading...</p>}
     </div>
   );
