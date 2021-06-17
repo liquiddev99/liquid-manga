@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Head from "next/head";
 import axios from "axios";
 
 import ListManga from "../../components/manga/ListManga";
@@ -44,33 +45,38 @@ export default function Search() {
   }, [title]);
 
   return (
-    <div className="container">
-      <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
-        Result
-      </p>
-      <div className="grid grid-cols-6 gap-6 mt-5">
-        {listManga.length
-          ? listManga.map((manga: Manga) => (
-              <Link key={manga.id} href={`/manga/${manga.id}`}>
-                <a>
-                  <ListManga manga={manga} />
-                </a>
-              </Link>
-            ))
-          : null}
-        {loading && (
-          <>
-            {Array.from(Array(12).keys()).map((_, index) => (
-              <ListMangaSke key={index} />
-            ))}
-          </>
-        )}
-        {notFound && (
-          <p className="text-white col-span-full h-screen">
-            No results match title {title}
-          </p>
-        )}
+    <>
+      <Head>
+        <title>Search</title>
+      </Head>
+      <div className="container">
+        <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
+          Result
+        </p>
+        <div className="grid grid-cols-6 gap-6 mt-5">
+          {listManga.length
+            ? listManga.map((manga: Manga) => (
+                <Link key={manga.id} href={`/manga/${manga.id}`}>
+                  <a>
+                    <ListManga manga={manga} />
+                  </a>
+                </Link>
+              ))
+            : null}
+          {loading && (
+            <>
+              {Array.from(Array(12).keys()).map((_, index) => (
+                <ListMangaSke key={index} />
+              ))}
+            </>
+          )}
+          {notFound && (
+            <p className="text-white col-span-full h-screen">
+              No results match title {title}
+            </p>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 }
