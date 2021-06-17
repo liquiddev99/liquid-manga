@@ -50,7 +50,7 @@ function Header() {
               Genres
               <ChevronDownIcon className="h-5 w-5" />
             </div>
-            <div className="bg-white rounded text-black absolute top-full hidden group-hover:block w-3-quarter-screen z-10 -right-96">
+            <div className="bg-middle rounded text-white absolute top-full hidden group-hover:block w-3-quarter-screen z-10 -right-96">
               <div className="w-full grid grid-cols-6 gap-2 my-4">
                 {tags &&
                   tags.map((tag: Tag) => (
