@@ -9,12 +9,14 @@ import LayoutPage from "../components/layout/Layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <LayoutPage>
+    <>
       <Head>
         <link rel="shortcut icon" href="/favicon.ico" />
       </Head>
-      <Component {...pageProps} />
-    </LayoutPage>
+      <LayoutPage>
+        <Component {...pageProps} />
+      </LayoutPage>
+    </>
   );
 }
 export default MyApp;
