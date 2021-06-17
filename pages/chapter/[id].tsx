@@ -11,6 +11,18 @@ import { getListChapter } from "../../helpers/getMangaInfo";
 import NotFound from "../../components/error/NotFound";
 import { Chapter } from "../../interfaces/intefaces";
 
+interface Data {
+  result: string;
+  data: {
+    attributes: {
+      data: [];
+      publishAt: string;
+      hash: string;
+    };
+  };
+  relationships: [{ id: string; type: string }];
+}
+
 export default function ChapterDetail(props: {
   base_url: string;
   temp_token: string;
@@ -27,7 +39,14 @@ export default function ChapterDetail(props: {
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const { base_url, temp_token } = props;
-  const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
+  const fetcher = async (url: string) => {
+    setLoading(true);
+    const res = await axios.get(url);
+    setLoading(false);
+    const data: Data = res.data;
+    return data;
+  };
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -77,6 +96,12 @@ export default function ChapterDetail(props: {
     setDisablePrev(false);
     setDisableNext(false);
     const currIndex = chapters.findIndex((chapter) => chapter.data.id === id);
+    console.log("re-run");
+    if (chapters[currIndex + 1]) {
+      router.prefetch(
+        `/chapter/${chapters[currIndex + 1].data.id}?language=${language}`
+      );
+    }
     setCurrentIndex(currIndex);
     if (!chapters[currIndex - 1]) {
       setDisablePrev(true);
@@ -88,10 +113,11 @@ export default function ChapterDetail(props: {
 
   useEffect(() => {
     if (!data) return;
-    setLoading(false);
+    console.log(data, "data");
+    // setLoading(true);
     const mangaId = data.relationships.find(
       (relation: any) => relation.type === "manga"
-    ).id;
+    )!.id;
     setMangaId(mangaId);
     const getChapters = async () => {
       const listChapter = await getListChapter(mangaId, language);
@@ -153,16 +179,24 @@ export default function ChapterDetail(props: {
       )}
       {data &&
         data.data.attributes.data.map((fileName: string) => (
-          <div className="my-2 w-full h-auto" key={fileName}>
-            <div className="aspect-w-3 aspect-h-4 text-white">
-              <Image
-                src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
-                alt="fetching image..."
-                layout="fill"
-                priority={true}
-                objectFit="contain"
-              />
-            </div>
+          <div className="w-full" key={fileName}>
+            {/* <div className="aspect-w-3 aspect-h-4 text-white relative"> */}
+            {/* <Image
+              src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
+              alt="fetching image..."
+              width="auto"
+              height="auto"
+              // layout="fill"
+              // sizes="75vw"
+              priority={true}
+              objectFit="contain"
+            /> */}
+            <img
+              src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
+              alt="fetching image..."
+              className="w-auto h-auto mx-auto object-contain"
+            />
+            {/* </div> */}
           </div>
         ))}
 
