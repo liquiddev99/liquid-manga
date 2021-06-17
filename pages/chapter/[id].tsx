@@ -172,8 +172,9 @@ export default function ChapterDetail(props: {
             className={`${
               disableNext ? "bg-gray-400" : "bg-red-500 cursor-pointer"
             } p-2`}
+            onClick={nextChapter}
           >
-            <ArrowRightIcon className="h-5 w-5" onClick={nextChapter} />
+            <ArrowRightIcon className="h-5 w-5" />
           </div>
         </div>
       )}
@@ -234,8 +235,9 @@ export default function ChapterDetail(props: {
             className={`${
               disableNext ? "bg-gray-400" : "bg-red-500 cursor-pointer"
             } p-2`}
+            onClick={nextChapter}
           >
-            <ArrowRightIcon className="h-5 w-5" onClick={nextChapter} />
+            <ArrowRightIcon className="h-5 w-5" />
           </div>
         </div>
       )}
