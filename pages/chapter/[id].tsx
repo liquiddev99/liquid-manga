@@ -1,5 +1,5 @@
 import { GetServerSideProps } from "next";
-import Image from "next/image";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { ParsedUrlQuery } from "querystring";
 import { useState, useEffect, ChangeEvent, KeyboardEvent } from "react";
@@ -18,6 +18,7 @@ interface Data {
       data: [];
       publishAt: string;
       hash: string;
+      title: string;
     };
   };
   relationships: [{ id: string; type: string }];
@@ -138,6 +139,9 @@ export default function ChapterDetail(props: {
   }
   return (
     <div className="container flex flex-col items-center min-h-screen">
+      <Head>
+        <title>{data ? data.data.attributes.title : "Chapter"}</title>
+      </Head>
       {!loading && chapters && (
         <div className="w-full flex justify-center items-center my-5 relative">
           <div

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
+import Head from "next/head";
 
 import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
 import { getListChapter } from "../../helpers/getMangaInfo";
@@ -74,6 +75,9 @@ export default function DetailManga() {
 
   return (
     <div className="text-white container">
+      <Head>
+        <title>{manga ? manga.title : "Manga"}</title>
+      </Head>
       <div className="w-full text-white flex justify-between py-10">
         {!loadingManga && manga && (
           <>
