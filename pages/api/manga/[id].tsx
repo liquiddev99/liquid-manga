@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
-import { Result, Tag } from "../../../interfaces/intefaces";
+import { Result, SubTag } from "../../../interfaces/intefaces";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     );
     const fileName = coverInfo.data.data.attributes.fileName;
 
-    const tags = mangaInfo.data.attributes.tags.map((tag: Tag) => {
+    const tags = mangaInfo.data.attributes.tags.map((tag: SubTag) => {
       return { id: tag.id, name: tag.attributes.name.en };
     });
     const altTitles = mangaInfo.data.attributes.altTitles
