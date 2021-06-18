@@ -4,20 +4,11 @@ import { useRouter } from "next/router";
 import { SearchIcon, ChevronDownIcon } from "@heroicons/react/outline";
 import axios from "axios";
 
-interface Tag {
-  result: string;
-  data: {
-    attributes: {
-      name: { en: string };
-    };
-    id: string;
-    type: string;
-  };
-}
+import { Tag } from "../../interfaces/intefaces";
 
 function Header() {
   const [input, setInput] = useState("");
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<Tag[]>([]);
   const router = useRouter();
   const onSubmit = (e: MouseEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,7 +18,7 @@ function Header() {
 
   useEffect(() => {
     axios.get("/api/manga/tag").then((res) => {
-      const data = res.data;
+      const data: Tag[] = res.data;
       data.sort((a: Tag, b: Tag) =>
         a.data.attributes.name.en.localeCompare(b.data.attributes.name.en)
       );

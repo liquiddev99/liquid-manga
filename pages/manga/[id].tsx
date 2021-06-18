@@ -5,7 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import Head from "next/head";
 
-import { Chapter, Manga, Result, Tag } from "../../interfaces/intefaces";
+import { Chapter, Manga } from "../../interfaces/intefaces";
 import { getListChapter } from "../../helpers/getMangaInfo";
 import DetailMangaSke from "../../components/skeleton/DetailMangaSke";
 

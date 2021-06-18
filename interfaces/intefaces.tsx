@@ -36,7 +36,18 @@ export type Result = {
   relationships: [{ id: string; type: string }];
 };
 
-export type Tag = {
+export interface Tag {
+  result: string;
+  data: {
+    attributes: {
+      name: { en: string };
+    };
+    id: string;
+    type: string;
+  };
+}
+
+export type SubTag = {
   id: string;
   type: string;
   attributes: {
