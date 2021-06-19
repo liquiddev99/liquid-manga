@@ -9,10 +9,10 @@
 
 @layer components {
   .container {
-    @apply mx-auto max-w-screen-xl w-11/12;
+    @apply mx-auto max-w-screen-xl w-10/12 md:w-11/12;
   }
   .link {
-    @apply text-white text-base ml-8 flex items-center;
+    @apply text-white text-sm md:text-base md:ml-8 flex items-center mb-2 md:mb-0;
   }
 }
 
