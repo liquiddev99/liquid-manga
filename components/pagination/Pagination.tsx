@@ -20,12 +20,14 @@ export default function Pagination(props: PropsPagination) {
     setBasePath(asPathArray[0]);
 
     let queryParams = asPathArray[1];
-    let filteredP = queryParams
-      .split("&")
-      .filter((a) => a !== `p=${p}`)
-      .join("&");
+    if (queryParams) {
+      let filteredP = queryParams
+        .split("&")
+        .filter((a) => a !== `p=${p}`)
+        .join("&");
 
-    setQueryFilteredP(filteredP);
+      setQueryFilteredP(filteredP);
+    }
   }, [router.isReady]);
 
   const range = (start: number, end: number): number[] => {
