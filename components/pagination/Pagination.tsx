@@ -38,20 +38,25 @@ export default function Pagination(props: PropsPagination) {
 
   const prevPage = () => {
     router.push(
-      `${basePath}?p=${p - 1}${queryFilteredP ? "&" + queryFilteredP : ""}`
+      `${basePath}?p=${p - 1}${queryFilteredP ? "&" + queryFilteredP : ""}`,
+      undefined,
+      { shallow: true }
     );
   };
 
   const nextPage = () => {
     router.push(
-      `${basePath}?p=${p + 1}${queryFilteredP ? "&" + queryFilteredP : ""}`
+      `${basePath}?p=${p + 1}${queryFilteredP ? "&" + queryFilteredP : ""}`,
+      undefined,
+      { shallow: true }
     );
   };
 
   const changePage = (p: number) => {
-    console.log(basePath);
     router.push(
-      `${basePath}?p=${p}${queryFilteredP ? "&" + queryFilteredP : ""}`
+      `${basePath}?p=${p}${queryFilteredP ? "&" + queryFilteredP : ""}`,
+      undefined,
+      { shallow: true }
     );
   };
 
