@@ -15,3 +15,7 @@
     @apply text-white text-base ml-8 flex items-center;
   }
 }
+
+.paginate {
+  @apply flex items-center justify-center h-7 w-7 m-1 rounded cursor-pointer;
+}

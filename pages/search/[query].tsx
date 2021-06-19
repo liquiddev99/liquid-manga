@@ -8,18 +8,23 @@ import ListManga from "../../components/manga/ListManga";
 import { Manga } from "../../interfaces/intefaces";
 import { getCoverIds, getListManga } from "../../helpers/getMangaInfo";
 import ListMangaSke from "../../components/skeleton/ListMangaSke";
+import Pagination from "../../components/pagination/Pagination";
 
 export default function Search() {
   const [listManga, setListManga] = useState<Manga[]>([]);
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
+  const [totalPage, setTotalPage] = useState(0);
   const router = useRouter();
-  const { query } = router.query;
+  const query = router.query.query as string;
+  let p = parseInt(router.query.p as string);
+  p = p || 1;
 
   useEffect(() => {
     setLoading(true);
     setListManga([]);
-    axios.get(`/api/manga/query?query=${query}`).then((res) => {
+    if (!router.isReady) return;
+    axios.get(`/api/manga/query?query=${query}&p=${p}`).then((res) => {
       setNotFound(false);
       const data = res.data;
       if (!data.results.length) {
@@ -28,11 +33,13 @@ export default function Search() {
         return;
       }
       console.log(data);
+      setTotalPage(Math.ceil(data.total / 100));
       const coverIds = getCoverIds(data.results);
       axios
         .get(`/api/cover?coverIds=${coverIds}`)
         .then((res) => {
           const mangas = getListManga(data.results, res.data);
+          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
           setListManga(mangas);
         })
         .catch(() => {
@@ -42,7 +49,7 @@ export default function Search() {
           setLoading(false);
         });
     });
-  }, [query]);
+  }, [query, p, router.isReady]);
 
   return (
     <>
@@ -76,6 +83,7 @@ export default function Search() {
             </p>
           )}
         </div>
+        <Pagination totalPage={totalPage} p={p} />
       </div>
     </>
   );
