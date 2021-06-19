@@ -3,6 +3,7 @@ import axios from "axios";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   try {
+    console.log(req.query);
     let p = req.query.p as string;
     p = p || "1";
     let query = req.query.query as string;

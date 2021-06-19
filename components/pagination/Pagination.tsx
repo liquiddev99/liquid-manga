@@ -28,7 +28,7 @@ export default function Pagination(props: PropsPagination) {
 
       setQueryFilteredP(filteredP);
     }
-  }, [router.isReady]);
+  }, [router.isReady, router.asPath]);
 
   const range = (start: number, end: number): number[] => {
     return Array(end - start + 1)
@@ -38,35 +38,20 @@ export default function Pagination(props: PropsPagination) {
 
   const prevPage = () => {
     router.push(
-      `${basePath}?p=${p - 1}${queryFilteredP ? "&" + queryFilteredP : ""}`,
-      undefined,
-      {
-        shallow: true,
-        scroll: true,
-      }
+      `${basePath}?p=${p - 1}${queryFilteredP ? "&" + queryFilteredP : ""}`
     );
   };
 
   const nextPage = () => {
     router.push(
-      `${basePath}?p=${p + 1}${queryFilteredP ? "&" + queryFilteredP : ""}`,
-      undefined,
-      {
-        shallow: true,
-        scroll: true,
-      }
+      `${basePath}?p=${p + 1}${queryFilteredP ? "&" + queryFilteredP : ""}`
     );
   };
 
   const changePage = (p: number) => {
     console.log(basePath);
     router.push(
-      `${basePath}?p=${p}${queryFilteredP ? "&" + queryFilteredP : ""}`,
-      undefined,
-      {
-        shallow: true,
-        scroll: true,
-      }
+      `${basePath}?p=${p}${queryFilteredP ? "&" + queryFilteredP : ""}`
     );
   };
 
