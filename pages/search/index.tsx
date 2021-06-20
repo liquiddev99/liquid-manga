@@ -60,7 +60,7 @@ export default function Search() {
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
           Result
         </p>
-        <div className="grid grid-cols-6 gap-6 mt-5">
+        <div className="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-6 mt-5">
           {listManga.length
             ? listManga.map((manga: Manga) => (
                 <Link key={manga.id} href={`/manga/${manga.id}`}>

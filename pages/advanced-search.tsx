@@ -60,7 +60,7 @@ function AdvancedSearch(props: { tags: Tag[] }) {
         </p>
 
         <p className="text-xl mt-3">Genres</p>
-        <div className="w-full grid grid-cols-7 gap-2 mt-2">
+        <div className="w-full grid grid-cols-2 md:grid-cols-7 gap-2 mt-2">
           {tags &&
             tags.map((tag) => (
               <div key={tag.data.id} className="flex flex-row items-center">
@@ -79,7 +79,7 @@ function AdvancedSearch(props: { tags: Tag[] }) {
             ))}
         </div>
         <p className="text-xl mt-3">Status</p>
-        <div className="w-full grid grid-cols-7 gap-2 mt-2">
+        <div className="w-full grid grid-cols-3 md:grid-cols-7 gap-2 mt-2">
           <div className="flex flex-row items-center mr-3">
             <input
               type="checkbox"

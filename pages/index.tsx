@@ -99,7 +99,7 @@ export default function Home(props: IPropsListManga) {
                   height={420}
                   className="rounded-xl"
                 />
-                <div className="md:h-5/6 h-full w-2/3 ml-3">
+                <div className="md:h-5/6 h-full w-2/3 ml-2">
                   <p className="text-xl md:text-3xl md:mt-10 mt-4 mb-6 line-clamp-4 md:line-clamp-none">
                     {manga.title}
                   </p>
@@ -114,7 +114,7 @@ export default function Home(props: IPropsListManga) {
                   >
                     Read now
                   </button>
-                  <button className="py-2 md:px-3 px-2 rounded uppercase font-semibold text-xs md:text-sm bg-green-500">
+                  <button className="w-full md:w-auto py-2 md:px-3 px-1 rounded uppercase font-semibold text-xs md:text-sm bg-green-500">
                     Add to favorite
                   </button>
                 </div>

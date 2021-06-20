@@ -32,7 +32,7 @@ function LayoutPage({ children }: LayoutProps) {
       {children}
       <Footer />
       <ArrowCircleUpIcon
-        className={`h-7 w-7 md:h-12 md:w-12 fixed right-4 bottom-3 cursor-pointer ${
+        className={`h-8 w-8 md:h-12 md:w-12 fixed right-4 bottom-3 cursor-pointer ${
           showScroll ? "block" : "hidden"
         }`}
         onClick={scrollToTop}
