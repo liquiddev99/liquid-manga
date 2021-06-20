@@ -110,12 +110,12 @@ export default function Home(props: IPropsListManga) {
                     onClick={() => {
                       router.push(`/manga/${manga.id}`);
                     }}
-                    className="mr-4 bg-red-600 mb-2 py-2 md:px-3 px-2 rounded uppercase font-semibold text-xs md:text-sm"
+                    className="mr-4 bg-red-600 mb-2 py-2 md:px-3 px-2 rounded md:uppercase font-semibold text-sm"
                   >
-                    Read now
+                    Read Now
                   </button>
-                  <button className="w-full md:w-auto py-2 md:px-3 px-1 rounded uppercase font-semibold text-xs md:text-sm bg-green-500">
-                    Add to favorite
+                  <button className="py-2 md:px-3 px-2 rounded md:uppercase font-semibold text-sm bg-green-500">
+                    Add To Favorite
                   </button>
                 </div>
               </div>

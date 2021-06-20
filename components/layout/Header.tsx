@@ -36,7 +36,7 @@ function Header() {
   return (
     <div className="w-full bg-top relative">
       <div
-        className={`absolute top-full z-20 left-0 w-screen bg-middle origin-top transition duration-500 transform md:hidden ${
+        className={`absolute top-full z-20 left-0 w-screen bg-middle origin-top transition duration-500 transform lg:hidden ${
           open ? "scale-y-100" : "scale-y-0"
         }`}
       >
@@ -72,7 +72,7 @@ function Header() {
               <ChevronDownIcon className="h-5 w-5" />
             </div>
             <div className="bg-bottom rounded text-white absolute top-full hidden group-hover:block w-full z-30">
-              <div className="w-5/6 text-sm mx-auto grid grid-cols-2 gap-3 my-4">
+              <div className="w-5/6 text-sm mx-auto grid grid-cols-2 md:grid-cols-3 gap-3 my-4">
                 {tags &&
                   tags.map((tag: Tag) => (
                     <Link
@@ -100,7 +100,7 @@ function Header() {
           </a>
         </Link>
         <div
-          className="md:hidden bg-white rounded cursor-pointer"
+          className="lg:hidden bg-white rounded cursor-pointer"
           onClick={() => setOpen(!open)}
         >
           {open ? (
@@ -110,7 +110,7 @@ function Header() {
           )}
         </div>
 
-        <div className="md:flex flex-row items-center hidden">
+        <div className="lg:flex flex-row items-center hidden">
           <Link href="/">
             <a className="link">Home</a>
           </Link>
@@ -120,7 +120,7 @@ function Header() {
               <ChevronDownIcon className="h-5 w-5" />
             </div>
             <div className="bg-middle rounded text-white absolute top-full hidden group-hover:block w-3-quarter-screen z-10 -right-96">
-              <div className="w-full grid grid-cols-6 gap-2 my-4">
+              <div className="w-full grid lg:grid-cols-5 xl:grid-cols-6 gap-2 my-4">
                 {tags &&
                   tags.map((tag: Tag) => (
                     <Link

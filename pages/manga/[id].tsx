@@ -87,7 +87,7 @@ export default function DetailManga() {
               height={400}
               objectFit="contain"
             />
-            <div className="md:w-2/3 mt-3">
+            <div className="md:w-2/3 md:ml-3 mt-3">
               <p className="text-2xl md:text-3xl mt-5 mb-2">{manga.title}</p>
               <p className="capitalize text-gray-300">{manga.status}</p>
               {manga.altTitles && (

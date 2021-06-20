@@ -9,7 +9,7 @@ export default function LastUpdated(props: { mangaSafe: Manga[] }) {
       <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">
         Last Updated
       </p>
-      <div className="grid md:grid-cols-6 grid-cols-2 md:gap-6 gap-3 mt-5">
+      <div className="responsive-list-manga mt-5">
         {props.mangaSafe.map((manga: Manga) => (
           <Link key={manga.id} href={`/manga/${manga.id}`}>
             <a>

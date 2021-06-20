@@ -73,14 +73,14 @@ export default function Pagination(props: PropsPagination) {
         </div>
       )}
       {p - 3 > 1 && <div className="paginate bg-white">...</div>}
-      {range(p - 2, p + 2).map((number) => (
+      {range(p - 2, p + 2).map((number, index) => (
         <>
           {number >= 1 && number <= totalPage ? (
             <div
               className={`paginate${
                 p === number ? " bg-green-500 text-white" : " bg-white"
               }`}
-              key={number}
+              key={index}
               onClick={() => {
                 changePage(number);
               }}
