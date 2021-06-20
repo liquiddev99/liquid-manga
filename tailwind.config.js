@@ -18,6 +18,10 @@ module.exports = {
         "half-screen": "50vw",
         "3-quarter-screen": "75vw",
       },
+      gridTemplateRows: {
+        "2-auto": "repeat(2, minmax(0, auto))",
+        "3-auto": "repeat(3, minmax(0, auto))",
+      },
     },
   },
   variants: {
