@@ -78,18 +78,16 @@ export default function DetailManga() {
       <Head>
         <title>{manga ? manga.title : "Manga"}</title>
       </Head>
-      <div className="w-full text-white py-10 grid grid-rows-3-auto md:grid-rows-2-auto grid-cols-3">
+      <div className="w-full text-white py-10 flex flex-col md:flex-row justify-between">
         {!loadingManga && manga && (
           <>
-            <div className="col-span-full md:col-span-1 md:row-span-full flex items-center">
-              <Image
-                src={manga.urlImage}
-                width={300}
-                height={400}
-                objectFit="contain"
-              />
-            </div>
-            <div className="col-span-full md:col-span-2">
+            <Image
+              src={manga.urlImage}
+              width={300}
+              height={400}
+              objectFit="contain"
+            />
+            <div className="md:w-2/3 mt-3">
               <p className="text-2xl md:text-3xl mt-5 mb-2">{manga.title}</p>
               <p className="capitalize text-gray-300">{manga.status}</p>
               {manga.altTitles && (
@@ -97,8 +95,6 @@ export default function DetailManga() {
                   Alt Titles: {manga.altTitles}
                 </p>
               )}
-            </div>
-            <div className="col-span-full md:col-span-2">
               {manga.tags.map((tag) => (
                 <div
                   key={tag.id}
