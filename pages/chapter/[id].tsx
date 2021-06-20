@@ -147,9 +147,9 @@ export default function ChapterDetail(props: {
         </title>
       </Head>
       {!loading && chapters && (
-        <div className="w-full flex justify-center items-center my-5 relative">
+        <div className="w-full flex justify-end md:justify-center items-center my-5 relative">
           <div
-            className="absolute left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
+            className="absolute left-0 md:left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
             onClick={backToManga}
           >
             Manga Info
@@ -210,9 +210,9 @@ export default function ChapterDetail(props: {
         ))}
 
       {!loading && chapters && (
-        <div className="w-full flex justify-center items-center my-5 relative">
+        <div className="w-full flex justify-end md:justify-center items-center my-5 relative">
           <div
-            className="absolute left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
+            className="absolute left-0 md:left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
             onClick={backToManga}
           >
             Manga Info
