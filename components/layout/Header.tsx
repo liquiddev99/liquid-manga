@@ -56,10 +56,14 @@ function Header() {
             </button>
           </form>
           <Link href="/">
-            <a className="link">Home</a>
+            <a onClick={() => setOpen(false)} className="link">
+              Home
+            </a>
           </Link>
           <Link href="/advanced-search">
-            <a className="link">Advanced Search</a>
+            <a onClick={() => setOpen(false)} className="link">
+              Advanced Search
+            </a>
           </Link>
 
           <div className="relative group">
@@ -91,7 +95,7 @@ function Header() {
       </div>
       <div className="container flex py-3 justify-between items-center z-30">
         <Link href="/">
-          <a className="text-white text-2xl md:text-4xl font-dancing">
+          <a className="text-white text-3xl md:text-4xl font-dancing">
             Liquid Manga
           </a>
         </Link>

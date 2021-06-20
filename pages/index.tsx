@@ -99,20 +99,22 @@ export default function Home(props: IPropsListManga) {
                   height={420}
                   className="rounded-xl"
                 />
-                <div className="h-5/6 w-2/3">
-                  <p className="text-3xl mt-10 mb-6">{manga.title}</p>
-                  <p className="text-sm leading-normal mb-6">
+                <div className="md:h-5/6 h-full w-2/3 ml-3">
+                  <p className="text-xl md:text-3xl md:mt-10 mt-4 mb-6 line-clamp-4 md:line-clamp-none">
+                    {manga.title}
+                  </p>
+                  <p className="text-sm leading-normal hidden md:block mb-6">
                     {manga.description}
                   </p>
                   <button
                     onClick={() => {
                       router.push(`/manga/${manga.id}`);
                     }}
-                    className="mr-4 bg-red-600 py-2 px-3 rounded uppercase font-semibold text-sm"
+                    className="mr-4 bg-red-600 mb-2 py-2 md:px-3 px-2 rounded uppercase font-semibold text-xs md:text-sm"
                   >
                     Read now
                   </button>
-                  <button className="py-2 px-3 rounded uppercase font-semibold text-sm bg-green-500">
+                  <button className="py-2 md:px-3 px-2 rounded uppercase font-semibold text-xs md:text-sm bg-green-500">
                     Add to favorite
                   </button>
                 </div>
