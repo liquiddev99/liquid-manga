@@ -86,6 +86,7 @@ export default function DetailManga() {
               width={300}
               height={400}
               objectFit="contain"
+              alt="Cover Image"
             />
             <div className="md:w-2/3 md:ml-3 mt-3">
               <p className="text-2xl md:text-3xl mt-5 mb-2">{manga.title}</p>

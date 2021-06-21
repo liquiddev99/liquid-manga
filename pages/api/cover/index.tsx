@@ -2,7 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function GetCoverImage(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const coverIds: string = req.query.coverIds as string;
     const coverIdsArray = coverIds.split(",");
@@ -16,4 +19,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (err) {
     return res.status(404).json({ msg: "No results found" });
   }
-};
+}

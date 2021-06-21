@@ -2,7 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function GetListChapter(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     let { mangaId, offset, language } = req.query;
     const response = await axios.get(
@@ -13,4 +16,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(err.response, "error response");
     return res.status(404).json({ msg: "Couldn't find this Manga" });
   }
-};
+}

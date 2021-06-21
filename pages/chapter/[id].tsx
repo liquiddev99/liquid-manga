@@ -97,7 +97,6 @@ export default function ChapterDetail(props: {
     setDisablePrev(false);
     setDisableNext(false);
     const currIndex = chapters.findIndex((chapter) => chapter.data.id === id);
-    console.log("re-run");
     if (chapters[currIndex + 1]) {
       router.prefetch(
         `/chapter/${chapters[currIndex + 1].data.id}?language=${language}`
@@ -110,7 +109,7 @@ export default function ChapterDetail(props: {
     if (!chapters[currIndex + 1]) {
       setDisableNext(true);
     }
-  }, [id, chapters]);
+  }, [id, chapters, language, router]);
 
   useEffect(() => {
     if (!data) return;
@@ -128,12 +127,12 @@ export default function ChapterDetail(props: {
       console.log(res);
       setChapters(res);
     });
-  }, [data]);
+  }, [data, language]);
   // if (error && error.response.status === 404) return <NotFound />;
   if (error) {
     return (
       <p className="text-white h-screen my-2 container">
-        Can't find this chapter
+        Can&#39;t find this chapter
       </p>
     );
   }
@@ -193,8 +192,8 @@ export default function ChapterDetail(props: {
             {/* <Image
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
-              width="auto"
-              height="auto"
+              // width="auto"
+              // height="auto"
               // layout="fill"
               // sizes="75vw"
               priority={true}

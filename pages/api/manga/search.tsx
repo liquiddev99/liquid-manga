@@ -2,7 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function SearchByTitle(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     let { title } = req.query;
     let p = req.query.p as string;
@@ -18,4 +21,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     console.log(err.response, "error response");
     return res.status(404).json({ msg: "No results found" });
   }
-};
+}

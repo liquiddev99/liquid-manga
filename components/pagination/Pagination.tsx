@@ -28,7 +28,7 @@ export default function Pagination(props: PropsPagination) {
 
       setQueryFilteredP(filteredP);
     }
-  }, [router.isReady, router.asPath]);
+  }, [router.isReady, router.asPath, p]);
 
   const range = (start: number, end: number): number[] => {
     return Array(end - start + 1)

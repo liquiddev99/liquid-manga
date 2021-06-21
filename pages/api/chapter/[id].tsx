@@ -2,7 +2,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import axios from "axios";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function GetDetailChapter(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     const { id } = req.query;
     const response = await axios.get(`https://api.mangadex.org/chapter/${id}`);
@@ -10,4 +13,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
   } catch (err) {
     return res.status(404).json({ msg: "Couldn't find this chapter" });
   }
-};
+}

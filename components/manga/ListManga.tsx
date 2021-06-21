@@ -9,7 +9,7 @@ export default function ListManga(props: { manga: Manga }) {
       className="bg-white overflow-hidden rounded-t-md flex flex-col h-full"
       key={manga.id}
     >
-      <Image src={manga.urlImage} width={175} height={220} />
+      <Image src={manga.urlImage} width={175} height={220} alt="Cover Image" />
       <div className="m-2 flex flex-col justify-between flex-grow">
         <p className="text-base font-bold text-gray-800 line-clamp-2">
           {manga.title}

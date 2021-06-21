@@ -37,6 +37,7 @@ function Footer() {
           <a
             href="https://www.facebook.com/profile.php?id=100022475362783"
             target="_blank"
+            rel="noreferrer"
           >
             <FaFacebookSquare className="text-white text-4xl" />
           </a>
@@ -46,7 +47,11 @@ function Footer() {
           <a>
             <FaTwitterSquare className="text-white text-4xl ml-2" />
           </a>
-          <a href="https://www.linkedin.com/in/liquid-career/" target="_blank">
+          <a
+            href="https://www.linkedin.com/in/liquid-career/"
+            target="_blank"
+            rel="noreferrer"
+          >
             <FaLinkedin className="text-white text-4xl ml-2" />
           </a>
         </div>
