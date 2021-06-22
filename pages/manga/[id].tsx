@@ -34,7 +34,7 @@ export default function DetailManga() {
       .then((res) => {
         setManga(res.data);
       })
-      .catch((err) => {
+      .catch(() => {
         setNotFoundManga(true);
       })
       .finally(() => {

@@ -1,14 +1,13 @@
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
+import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import { useState, useEffect, ChangeEvent } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
-import axios from "axios";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
-
 import { getListChapter } from "../../helpers/getMangaInfo";
-import NotFound from "../../components/error/NotFound";
 import { Chapter } from "../../interfaces/intefaces";
+import Image from "next/image";
 
 interface Data {
   result: string;
@@ -187,23 +186,22 @@ export default function ChapterDetail(props: {
       )}
       {data &&
         data.data.attributes.data.map((fileName: string) => (
-          <div className="w-full" key={fileName}>
+          <div className="w-full mb-5 image-container" key={fileName}>
             {/* <div className="aspect-w-3 aspect-h-4 text-white relative"> */}
-            {/* <Image
+            <Image
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
-              // width="auto"
-              // height="auto"
-              // layout="fill"
+              layout="fill"
               // sizes="75vw"
+              className="image"
               priority={true}
               objectFit="contain"
-            /> */}
-            <img
+            />
+            {/* <img
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
               className="w-auto h-auto mx-auto object-contain"
-            />
+            /> */}
             {/* </div> */}
           </div>
         ))}

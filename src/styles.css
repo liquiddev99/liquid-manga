@@ -7,6 +7,20 @@
   text-decoration: none;
 }
 
+.image-container > div {
+  position: unset !important;
+}
+
+.image {
+  position: relative !important;
+  height: auto !important;
+  width: auto !important;
+  min-height: unset !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  max-height: unset !important;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
