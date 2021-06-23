@@ -186,9 +186,9 @@ export default function ChapterDetail(props: {
       )}
       {data &&
         data.data.attributes.data.map((fileName: string) => (
-          <div className="w-full mb-5 image-container" key={fileName}>
+          <div className="w-full image-container" key={fileName}>
             {/* <div className="aspect-w-3 aspect-h-4 text-white relative"> */}
-            <Image
+            {/* <Image
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
               layout="fill"
@@ -196,12 +196,12 @@ export default function ChapterDetail(props: {
               className="image"
               priority={true}
               objectFit="contain"
-            />
-            {/* <img
+            /> */}
+            <img
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
               className="w-auto h-auto mx-auto object-contain"
-            /> */}
+            />
             {/* </div> */}
           </div>
         ))}

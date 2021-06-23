@@ -7,7 +7,7 @@
   text-decoration: none;
 }
 
-.image-container > div {
+/* .image-container > div {
   position: unset !important;
 }
 
@@ -17,9 +17,13 @@
   width: auto !important;
   min-height: unset !important;
   min-width: unset !important;
-  max-width: unset !important;
+  max-width: 100% !important;
   max-height: unset !important;
-}
+  display: block !important;
+  margin-top: unset !important;
+  margin-bottom: unset !important;
+  object-fit: contain !important;
+} */
 
 @tailwind base;
 @tailwind components;
