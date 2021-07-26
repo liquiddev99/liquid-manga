@@ -142,7 +142,7 @@ export default function Home(props: IPropsListManga) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const resSuggest = await axios.get(
-    `${process.env.BASE_URL_DEX}/manga?contentRating[]=suggestive&limit=4`
+    `${process.env.BASE_URL_DEX}/manga?contentRating[]=suggestive&limit=4&offset=12`
   );
   const resSafe = await axios.get(
     `${process.env.BASE_URL_DEX}/manga?contentRating[]=safe&limit=60`
@@ -155,7 +155,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const coverIdsSuggest = getCoverIds(resultSuggest);
   const queryIdsSuggest = "?ids[]=" + coverIdsSuggest.join("&ids[]=");
   const coverInfoSuggestRes = await axios.get(
-    `${process.env.BASE_URL_DEX}/cover${queryIdsSuggest}`
+    `${process.env.BASE_URL_DEX}/cover${queryIdsSuggest}&limit=4`
   );
   const coverInfosSuggest: { results: ICoverInfo[] } = coverInfoSuggestRes.data;
 
