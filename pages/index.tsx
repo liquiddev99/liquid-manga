@@ -169,5 +169,11 @@ export const getStaticProps: GetStaticProps = async () => {
   const mangaSuggest = getListManga(resultSuggest, coverInfosSuggest);
   const mangaSafe = getListManga(resultSafe, coverInfosSafe);
 
-  return { props: { mangaSuggest, mangaSafe }, revalidate: 5 };
+  return {
+    props: {
+      mangaSuggest: JSON.parse(JSON.stringify(mangaSuggest)),
+      mangaSafe: JSON.parse(JSON.stringify(mangaSafe)),
+    },
+    revalidate: 5,
+  };
 };

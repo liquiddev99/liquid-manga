@@ -12,7 +12,7 @@ export default function ListManga(props: { manga: Manga }) {
       <Image src={manga.urlImage} width={175} height={220} alt="Cover Image" />
       <div className="m-2 flex flex-col justify-between flex-grow">
         <p className="text-base font-bold text-gray-800 line-clamp-2">
-          {manga.title}
+          {manga.title ? manga.title : "Updating name..."}
         </p>
         <div>
           <p
