@@ -79,11 +79,6 @@ export default function Home(props: IPropsListManga) {
     <>
       <Head>
         <title>Liquid Manga</title>
-        <meta name="description" content="manga reading site" />
-        <meta property="og:title" content="liquid manga" />
-        <meta property="og:description" content="manga reading site" />
-        <meta property="og:url" content="https://www.liquid-manga.site/" />
-        <meta property="og:type" content="website" />
       </Head>
       <div className="relative bg-gradient-to-b from-top via-middle to-bottom">
         <div ref={viewportRef} className="overflow-hidden pt-4 pb-10 container">
