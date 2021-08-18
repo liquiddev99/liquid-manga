@@ -47,3 +47,4 @@
 .paginate {
   @apply flex items-center justify-center h-7 w-7 m-1 rounded cursor-pointer;
 }
+

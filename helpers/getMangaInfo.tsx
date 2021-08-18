@@ -1,10 +1,6 @@
 import axios from "axios";
 
-import { ICoverInfo, Result, Chapter, Manga } from "../interfaces/intefaces";
-
-interface MangaDetail extends Manga {
-  tags: [{ id: string; name: string }];
-}
+import { ICoverInfo, Result, Chapter } from "../interfaces/intefaces";
 
 export const getCoverIds = (listManga: Result[]) => {
   const coverIds = listManga.map((manga: Result) => {

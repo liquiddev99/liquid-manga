@@ -45,6 +45,7 @@ export default function Home(props: IPropsListManga) {
     if (!embla) return;
     setSelectedIndex(embla.selectedScrollSnap());
   }, [embla, setSelectedIndex]);
+
   useEffect(() => {
     if (!embla) return;
     onSelect();
@@ -94,7 +95,7 @@ export default function Home(props: IPropsListManga) {
               >
                 <Image
                   src={manga.urlImage}
-                  alt="Suggestive Manga"
+                  alt="Suggestive manga"
                   width={300}
                   height={420}
                   className="rounded-xl"
