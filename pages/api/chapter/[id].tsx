@@ -8,8 +8,8 @@ export default async function GetDetailChapter(
 ) {
   try {
     const { id } = req.query;
-    const response = await axios.get(`https://api.mangadex.org/chapter/${id}`);
-    res.status(200).json(response.data);
+    const chapter = await axios.get(`https://api.mangadex.org/chapter/${id}`);
+    res.status(200).json(chapter.data);
   } catch (err) {
     return res.status(404).json({ msg: "Couldn't find this chapter" });
   }
