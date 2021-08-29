@@ -22,15 +22,14 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
           alt="Manga Cover Image"
           priority={true}
           onLoad={() => {
-            console.log("loaded");
             setIsLoaded(true);
           }}
-          quality={25}
+          quality={10}
         />
       </div>
       {!isStatic && (
         <div className={`${isLoaded ? "hidden" : null}`}>
-          <Image src={loadingImg} alt="Loading..." width={175} height={220} />
+          <Image src={loadingImg} quality={10} alt="Loading..." width={175} height={220} />
         </div>
       )}
       <div className="m-2 flex flex-col justify-between flex-grow">
