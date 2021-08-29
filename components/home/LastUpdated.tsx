@@ -13,7 +13,7 @@ export default function LastUpdated(props: { mangaSafe: Manga[] }) {
         {props.mangaSafe.map((manga: Manga) => (
           <Link key={manga.id} href={`/manga/${manga.id}`}>
             <a>
-              <ListManga manga={manga} />
+              <ListManga manga={manga} isStatic={true} />
             </a>
           </Link>
         ))}

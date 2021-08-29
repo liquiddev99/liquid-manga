@@ -6,7 +6,6 @@ export default async function QueryManga(
   res: NextApiResponse
 ) {
   try {
-    console.log(req.query);
     let p = req.query.p as string;
     p = p || "1";
     let query = req.query.query as string;
