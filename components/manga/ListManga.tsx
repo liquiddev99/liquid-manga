@@ -25,7 +25,7 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
             setIsLoaded(true);
           }}
           quality={10}
-          objectFit="cover"
+          objectFit="contain"
         />
       </div>
       {!isStatic && (
@@ -36,7 +36,7 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
             alt="Loading..."
             width={220}
             height={260}
-            objectFit="cover"
+            objectFit="contain"
           />
         </div>
       )}
