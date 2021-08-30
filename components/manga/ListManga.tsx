@@ -17,15 +17,14 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
       <div className={`${isLoaded || isStatic ? null : "hidden"}`}>
         <Image
           src={manga.urlImage}
-          width={220}
-          height={260}
+          width={230}
+          height={270}
           alt="Manga Cover Image"
           priority={true}
           onLoad={() => {
             setIsLoaded(true);
           }}
           quality={10}
-          objectFit="contain"
         />
       </div>
       {!isStatic && (
@@ -34,9 +33,8 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
             src={loadingImg}
             quality={10}
             alt="Loading..."
-            width={220}
-            height={260}
-            objectFit="contain"
+            width={230}
+            height={270}
           />
         </div>
       )}
