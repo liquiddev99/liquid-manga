@@ -39,8 +39,10 @@ export default function DetailManga() {
     if (mangaError) {
       setNotFoundManga(true);
       setLoadingManga(false);
+      return;
     }
     setManga(fetchedManga);
+    setLoadingManga(false);
   }, [fetchedManga, mangaError]);
 
   //useEffect(() => {
