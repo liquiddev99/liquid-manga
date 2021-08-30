@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Head from "next/head";
-import axios from "axios";
+import useSWR from "swr";
 
 import ListManga from "../../components/manga/ListManga";
 import { Manga } from "../../interfaces/intefaces";
@@ -20,36 +20,72 @@ export default function Search() {
   let p = parseInt(router.query.p as string);
   p = p || 1;
 
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+  const { data: mangasInfo, error: mangasError } = useSWR(
+    title && p ? `/api/manga/search?title=${title}&p=${p}` : null,
+    fetcher
+  );
+  const { data: coversImg, error: coversError } = useSWR(
+    () => "/api/cover?coverIds=" + getCoverIds(mangasInfo.results),
+    fetcher
+  );
+
   useEffect(() => {
     setLoading(true);
     setListManga([]);
-    if (!router.isReady) return;
-    axios.get(`/api/manga/search?title=${title}&p=${p}`).then((res) => {
-      setNotFound(false);
-      const data = res.data;
-      if (!data.results.length) {
-        setLoading(false);
-        setNotFound(true);
-        return;
-      }
-      console.log(data);
-      setTotalPage(Math.ceil(data.total / 100));
-      const coverIds = getCoverIds(data.results);
-      axios
-        .get(`/api/cover?coverIds=${coverIds}`)
-        .then((res) => {
-          const mangas = getListManga(data.results, res.data);
-          setListManga(mangas);
-          window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
-        })
-        .catch(() => {
-          return "";
-        })
-        .finally(() => {
-          setLoading(false);
-        });
-    });
-  }, [title, p, router.isReady]);
+    if (!router.isReady || !mangasInfo) return;
+    if (mangasError || !mangasInfo.results.length) {
+      setLoading(false);
+      setNotFound(true);
+      return;
+    }
+    setTotalPage(Math.ceil(mangasInfo.total / 100));
+  }, [title, p, router.isReady, mangasInfo, mangasError]);
+
+  useEffect(() => {
+    if (coversError) {
+      setLoading(false);
+      setNotFound(true);
+      return;
+    }
+    if (!coversImg || !mangasInfo.results) return;
+    const mangas = getListManga(mangasInfo.results, coversImg);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    setListManga(mangas);
+    setLoading(false);
+  }, [coversImg, mangasInfo, coversError]);
+
+  //useEffect(() => {
+  //setLoading(true);
+  //setListManga([]);
+  //if (!router.isReady) return;
+  //axios.get(`/api/manga/search?title=${title}&p=${p}`).then((res) => {
+  //setNotFound(false);
+  //const data = res.data;
+  //if (!data.results.length) {
+  //setLoading(false);
+  //setNotFound(true);
+  //return;
+  //}
+  //console.log(data);
+  //setTotalPage(Math.ceil(data.total / 100));
+  //const coverIds = getCoverIds(data.results);
+  //axios
+  //.get(`/api/cover?coverIds=${coverIds}`)
+  //.then((res) => {
+  //const mangas = getListManga(data.results, res.data);
+  //setListManga(mangas);
+  //window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  //})
+  //.catch(() => {
+  //return "";
+  //})
+  //.finally(() => {
+  //setLoading(false);
+  //});
+  //});
+  //}, [title, p, router.isReady]);
 
   return (
     <>

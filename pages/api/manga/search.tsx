@@ -10,7 +10,6 @@ export default async function SearchByTitle(
     let { title } = req.query;
     let p = req.query.p as string;
     p = p || "1";
-    console.log(req.query);
     const response = await axios.get(
       `https://api.mangadex.org/manga?title=${title}&limit=100&offset=${
         (parseInt(p) - 1) * 100

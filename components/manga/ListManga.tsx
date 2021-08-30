@@ -29,7 +29,13 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
       </div>
       {!isStatic && (
         <div className={`${isLoaded ? "hidden" : null}`}>
-          <Image src={loadingImg} quality={10} alt="Loading..." width={175} height={220} />
+          <Image
+            src={loadingImg}
+            quality={10}
+            alt="Loading..."
+            width={175}
+            height={220}
+          />
         </div>
       )}
       <div className="m-2 flex flex-col justify-between flex-grow">

@@ -23,16 +23,13 @@ export default function Search() {
   const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
   const { data: mangasInfo, error: mangasError } = useSWR(
-    `/api/manga/query?query=${query}&p=${p}`,
+    query && p ? `/api/manga/query?query=${query}&p=${p}` : null,
     fetcher
   );
   const { data: coversImg, error: coversError } = useSWR(
     () => "/api/cover?coverIds=" + getCoverIds(mangasInfo.results),
     fetcher
   );
-
-  console.log(mangasInfo);
-  console.log(coversImg);
 
   useEffect(() => {
     setLoading(true);
@@ -47,13 +44,14 @@ export default function Search() {
   }, [query, p, router.isReady, mangasInfo, mangasError]);
 
   useEffect(() => {
-    if (!coversImg || !mangasInfo.results) return;
     if (coversError) {
       setLoading(false);
       setNotFound(true);
       return;
     }
+    if (!coversImg || !mangasInfo.results) return;
     const mangas = getListManga(mangasInfo.results, coversImg);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setListManga(mangas);
     setLoading(false);
   }, [coversImg, mangasInfo, coversError]);

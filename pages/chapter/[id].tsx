@@ -7,7 +7,6 @@ import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
 import { getListChapter } from "../../helpers/getMangaInfo";
 import { Chapter } from "../../interfaces/intefaces";
-import Image from "next/image";
 
 interface Data {
   result: string;
