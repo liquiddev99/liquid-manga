@@ -37,6 +37,7 @@ export default function Pagination(props: PropsPagination) {
   };
 
   const prevPage = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     router.push(
       `${basePath}?p=${p - 1}${queryFilteredP ? "&" + queryFilteredP : ""}`,
       undefined,
@@ -45,6 +46,7 @@ export default function Pagination(props: PropsPagination) {
   };
 
   const nextPage = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     router.push(
       `${basePath}?p=${p + 1}${queryFilteredP ? "&" + queryFilteredP : ""}`,
       undefined,
@@ -53,6 +55,7 @@ export default function Pagination(props: PropsPagination) {
   };
 
   const changePage = (p: number) => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     router.push(
       `${basePath}?p=${p}${queryFilteredP ? "&" + queryFilteredP : ""}`,
       undefined,
