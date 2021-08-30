@@ -1,9 +1,9 @@
 import { useState, useEffect, ChangeEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import axios from "axios";
 import Image from "next/image";
 import Head from "next/head";
+import useSWR from "swr";
 
 import { Chapter, Manga } from "../../interfaces/intefaces";
 import { getListChapter } from "../../helpers/getMangaInfo";
@@ -25,22 +25,40 @@ export default function DetailManga() {
   const [notFound, setNotFound] = useState(false);
   const [language, setLanguage] = useState("en");
 
+  const fetcher = (url: string) => fetch(url).then((r) => r.json());
+
+  const { data: fetchedManga, error: mangaError } = useSWR(
+    id ? `/api/manga/${id}` : null,
+    fetcher
+  );
+
   useEffect(() => {
-    if (!id) return;
     setNotFoundManga(false);
     setLoadingManga(true);
-    axios
-      .get(`/api/manga/${id}`)
-      .then((res) => {
-        setManga(res.data);
-      })
-      .catch(() => {
-        setNotFoundManga(true);
-      })
-      .finally(() => {
-        setLoadingManga(false);
-      });
-  }, [id]);
+    if (!fetchedManga) return;
+    if (mangaError) {
+      setNotFoundManga(true);
+      setLoadingManga(false);
+    }
+    setManga(fetchedManga);
+  }, [fetchedManga, mangaError]);
+
+  //useEffect(() => {
+  //if (!id) return;
+  //setNotFoundManga(false);
+  //setLoadingManga(true);
+  //axios
+  //.get(`/api/manga/${id}`)
+  //.then((res) => {
+  //setManga(res.data);
+  //})
+  //.catch(() => {
+  //setNotFoundManga(true);
+  //})
+  //.finally(() => {
+  //setLoadingManga(false);
+  //});
+  //}, [id]);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setLanguage(e.target.value);
@@ -53,7 +71,6 @@ export default function DetailManga() {
     const getChapters = async () => {
       if (!id) return [];
       const listChapter = await getListChapter(id, language);
-      console.log(listChapter, "listChapter");
       return listChapter;
     };
     getChapters()
