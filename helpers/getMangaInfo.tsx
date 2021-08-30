@@ -1,5 +1,4 @@
 import axios from "axios";
-//import useSWR from "swr";
 
 import { ICoverInfo, Result, Chapter } from "../interfaces/intefaces";
 
@@ -42,16 +41,6 @@ export const getListChapter = async (mangaId: string, language = "en") => {
   const res = await axios.get(
     `/api/chapter/manga?mangaId=${mangaId}&offset=0&language=${language}`
   );
-
-  //const fetcher = (url: string) => fetch(url).then((r) => r.json());
-
-  //const { data: fetchedListChapter, error: fetchListChapterError } = useSWR(
-  //`/api/chapter/manga?mangaId=${mangaId}&offset=0&language=${language}`,
-  //fetcher
-  //);
-
-  //if (!fetchedListChapter) return;
-  //if (fetchListChapterError) throw Error("Error when fetch list chapter");
 
   const data = res.data;
   const { total } = data;
