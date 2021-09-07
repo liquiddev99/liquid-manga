@@ -82,7 +82,7 @@ export default function Home(props: IPropsListManga) {
         <title>Liquid Manga</title>
       </Head>
       <div className="relative bg-gradient-to-b from-top via-middle to-bottom">
-        <div ref={viewportRef} className="overflow-hidden pt-4 pb-10 container">
+        <div ref={viewportRef} className="container pt-4 pb-10 overflow-hidden">
           <div
             onMouseEnter={() => setPause(true)}
             onMouseLeave={() => setPause(false)}
@@ -91,7 +91,7 @@ export default function Home(props: IPropsListManga) {
             {props.mangaSuggest.map((manga) => (
               <div
                 key={manga.id}
-                className="cursor-move text-white min-w-full flex justify-between"
+                className="flex justify-between min-w-full text-white cursor-move"
               >
                 <Image
                   src={manga.urlImage}
@@ -100,22 +100,22 @@ export default function Home(props: IPropsListManga) {
                   height={420}
                   className="rounded-xl"
                 />
-                <div className="md:h-5/6 h-full w-2/3 ml-2">
-                  <p className="text-xl md:text-3xl md:mt-10 mt-4 mb-6 line-clamp-4 md:line-clamp-none">
+                <div className="w-2/3 h-full ml-2 md:h-5/6">
+                  <p className="mt-4 mb-6 text-xl md:text-3xl md:mt-10 line-clamp-4 md:line-clamp-none">
                     {manga.title}
                   </p>
-                  <p className="text-sm leading-normal hidden md:block mb-6">
+                  <p className="hidden mb-6 text-sm leading-normal md:block">
                     {manga.description}
                   </p>
                   <button
                     onClick={() => {
                       router.push(`/manga/${manga.id}`);
                     }}
-                    className="mr-4 bg-red-600 mb-2 py-2 md:px-3 px-2 rounded md:uppercase font-semibold text-sm"
+                    className="px-2 py-2 mb-2 mr-4 text-sm font-semibold bg-red-600 rounded md:px-3 md:uppercase"
                   >
                     Read Now
                   </button>
-                  <button className="py-2 md:px-3 px-2 rounded md:uppercase font-semibold text-sm bg-green-500">
+                  <button className="px-2 py-2 text-sm font-semibold bg-green-500 rounded md:px-3 md:uppercase">
                     Add To Favorite
                   </button>
                 </div>
@@ -125,15 +125,15 @@ export default function Home(props: IPropsListManga) {
         </div>
         <button
           onClick={() => scrollPrev()}
-          className="absolute top-2/4 text-white z-10 left-4"
+          className="absolute z-10 text-white top-2/4 left-4"
         >
-          <ChevronLeftIcon className="h-6 w-6" />
+          <ChevronLeftIcon className="w-6 h-6" />
         </button>
         <button
           onClick={() => scrollNext()}
-          className="absolute top-2/4 text-white z-10 right-4"
+          className="absolute z-10 text-white top-2/4 right-4"
         >
-          <ChevronRightIcon className="h-6 w-6" />
+          <ChevronRightIcon className="w-6 h-6" />
         </button>
       </div>
       <LastUpdated mangaSafe={props.mangaSafe} />
@@ -143,7 +143,7 @@ export default function Home(props: IPropsListManga) {
 
 export const getStaticProps: GetStaticProps = async () => {
   const resSuggest = await axios.get(
-    `${process.env.BASE_URL_DEX}/manga?contentRating[]=suggestive&limit=4&offset=24`
+    `${process.env.BASE_URL_DEX}/manga?contentRating[]=suggestive&limit=4`
   );
   const resSafe = await axios.get(
     `${process.env.BASE_URL_DEX}/manga?contentRating[]=safe&limit=60`

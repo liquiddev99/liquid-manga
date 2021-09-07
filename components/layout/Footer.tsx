@@ -32,7 +32,7 @@ function Footer() {
             <p className="text-sm mb-2">Privacy</p>
           </div>
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-center md:justify-end">
           <a
             href="https://www.facebook.com/profile.php?id=100022475362783"
             target="_blank"
