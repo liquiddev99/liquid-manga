@@ -63,18 +63,16 @@ function AdvancedSearch(props: { tags: Tag[] }) {
         <div className="w-full grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-2 mt-2">
           {tags &&
             tags.map((tag) => (
-              <div key={tag.data.id} className="flex flex-row items-center">
+              <div key={tag.id} className="flex flex-row items-center">
                 <input
                   type="checkbox"
-                  id={tag.data.id}
+                  id={tag.id}
                   className="mr-1"
                   name="includedTags[]"
-                  value={tag.data.id}
+                  value={tag.id}
                   onChange={handleCheck}
                 />
-                <label htmlFor={tag.data.id}>
-                  {tag.data.attributes.name.en}
-                </label>
+                <label htmlFor={tag.id}>{tag.attributes.name.en}</label>
               </div>
             ))}
         </div>
@@ -141,9 +139,9 @@ export default AdvancedSearch;
 
 export const getStaticProps: GetStaticProps = async () => {
   const res = await axios.get(`${process.env.BASE_URL_DEX}/manga/tag`);
-  const tags: Tag[] = res.data;
+  const tags: Tag[] = res.data.data;
   tags.sort((a: Tag, b: Tag) =>
-    a.data.attributes.name.en.localeCompare(b.data.attributes.name.en)
+    a.attributes.name.en.localeCompare(b.attributes.name.en)
   );
 
   return { props: { tags }, revalidate: 5 };
