@@ -18,8 +18,8 @@ interface Data {
       title: string;
       chapter: string;
     };
+    relationships: [{ id: string; type: string }];
   };
-  relationships: [{ id: string; type: string }];
 }
 
 export default function ChapterDetail(props: {
@@ -55,13 +55,13 @@ export default function ChapterDetail(props: {
   const prevChapter = () => {
     if (!chapters) return;
     if (!chapters[currentIndex - 1]) return;
-    const previousId = chapters[currentIndex - 1].data.id;
+    const previousId = chapters[currentIndex - 1].id;
     router.push(`/chapter/${previousId}?language=${language}`);
   };
   const nextChapter = () => {
     if (!chapters) return;
     if (!chapters[currentIndex + 1]) return;
-    const nextId = chapters[currentIndex + 1].data.id;
+    const nextId = chapters[currentIndex + 1].id;
     router.push(`/chapter/${nextId}?language=${language}`);
   };
 
@@ -94,10 +94,10 @@ export default function ChapterDetail(props: {
     if (!chapters) return;
     setDisablePrev(false);
     setDisableNext(false);
-    const currIndex = chapters.findIndex((chapter) => chapter.data.id === id);
+    const currIndex = chapters.findIndex((chapter) => chapter.id === id);
     if (chapters[currIndex + 1]) {
       router.prefetch(
-        `/chapter/${chapters[currIndex + 1].data.id}?language=${language}`
+        `/chapter/${chapters[currIndex + 1].id}?language=${language}`
       );
     }
     setCurrentIndex(currIndex);
@@ -111,9 +111,8 @@ export default function ChapterDetail(props: {
 
   useEffect(() => {
     if (!data) return;
-    console.log(data, "data");
     // setLoading(true);
-    const mangaId = data.relationships.find(
+    const mangaId = data.data.relationships.find(
       (relation: any) => relation.type === "manga"
     )!.id;
     setMangaId(mangaId);
@@ -122,14 +121,13 @@ export default function ChapterDetail(props: {
       return listChapter;
     };
     getChapters().then((res) => {
-      console.log(res);
       setChapters(res);
     });
   }, [data, language]);
   // if (error && error.response.status === 404) return <NotFound />;
   if (error) {
     return (
-      <p className="text-white h-screen my-2 container">
+      <p className="container h-screen my-2 text-white">
         Can&#39;t find this chapter
       </p>
     );
@@ -144,9 +142,9 @@ export default function ChapterDetail(props: {
         </title>
       </Head>
       {!loading && chapters && (
-        <div className="w-full flex justify-end md:justify-center items-center my-5 relative">
+        <div className="relative flex items-center justify-end w-full my-5 md:justify-center">
           <div
-            className="absolute left-0 lg:left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
+            className="absolute left-0 flex items-center px-2 font-bold text-white bg-green-500 rounded cursor-pointer lg:left-36 h-9"
             onClick={backToManga}
           >
             Manga Info
@@ -157,19 +155,19 @@ export default function ChapterDetail(props: {
             } p-2`}
             onClick={prevChapter}
           >
-            <ArrowLeftIcon className="h-5 w-5" />
+            <ArrowLeftIcon className="w-5 h-5" />
           </div>
           <select
-            className="text-black w-2/5 h-9 p-2"
+            className="w-2/5 p-2 text-black h-9"
             value={`/chapter/${id}?language=${language}`}
             onChange={handleChange}
           >
             {chapters.map((chapter: Chapter) => (
               <option
-                value={`/chapter/${chapter.data.id}?language=${language}`}
-                key={chapter.data.id}
+                value={`/chapter/${chapter.id}?language=${language}`}
+                key={chapter.id}
               >
-                Chapter {chapter.data.attributes.chapter}
+                Chapter {chapter.attributes.chapter}
               </option>
             ))}
           </select>
@@ -179,14 +177,14 @@ export default function ChapterDetail(props: {
             } p-2`}
             onClick={nextChapter}
           >
-            <ArrowRightIcon className="h-5 w-5" />
+            <ArrowRightIcon className="w-5 h-5" />
           </div>
         </div>
       )}
       {data &&
         data.data.attributes.data.map((fileName: string) => (
           <div className="w-full image-container" key={fileName}>
-            {/* <div className="aspect-w-3 aspect-h-4 text-white relative"> */}
+            {/* <div className="relative text-white aspect-w-3 aspect-h-4"> */}
             {/* <Image
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
@@ -199,16 +197,16 @@ export default function ChapterDetail(props: {
             <img
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
               alt="fetching image..."
-              className="w-auto h-auto mx-auto object-contain"
+              className="object-contain w-auto h-auto mx-auto"
             />
             {/* </div> */}
           </div>
         ))}
 
       {!loading && chapters && (
-        <div className="w-full flex justify-end md:justify-center items-center my-5 relative">
+        <div className="relative flex items-center justify-end w-full my-5 md:justify-center">
           <div
-            className="absolute left-0 lg:left-36 bg-green-500 h-9 flex items-center px-2 rounded cursor-pointer text-white font-bold"
+            className="absolute left-0 flex items-center px-2 font-bold text-white bg-green-500 rounded cursor-pointer lg:left-36 h-9"
             onClick={backToManga}
           >
             Manga Info
@@ -219,19 +217,19 @@ export default function ChapterDetail(props: {
             } p-2`}
             onClick={prevChapter}
           >
-            <ArrowLeftIcon className="h-5 w-5" />
+            <ArrowLeftIcon className="w-5 h-5" />
           </div>
           <select
-            className="text-black w-2/5 h-9 p-2"
+            className="w-2/5 p-2 text-black h-9"
             value={`/chapter/${id}?language=${language}`}
             onChange={handleChange}
           >
             {chapters.map((chapter: Chapter) => (
               <option
-                value={`/chapter/${chapter.data.id}?language=${language}`}
-                key={chapter.data.id}
+                value={`/chapter/${chapter.id}?language=${language}`}
+                key={chapter.id}
               >
-                Chapter {chapter.data.attributes.chapter}
+                Chapter {chapter.attributes.chapter}
               </option>
             ))}
           </select>
@@ -241,11 +239,11 @@ export default function ChapterDetail(props: {
             } p-2`}
             onClick={nextChapter}
           >
-            <ArrowRightIcon className="h-5 w-5" />
+            <ArrowRightIcon className="w-5 h-5" />
           </div>
         </div>
       )}
-      {loading && <p className="text-white h-screen my-2">Loading...</p>}
+      {loading && <p className="h-screen my-2 text-white">Loading...</p>}
     </div>
   );
 }

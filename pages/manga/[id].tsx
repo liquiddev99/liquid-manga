@@ -97,7 +97,7 @@ export default function DetailManga() {
       <Head>
         <title>{manga ? manga.title : "Manga"}</title>
       </Head>
-      <div className="w-full text-white py-10 flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col justify-between w-full py-10 text-white md:flex-row">
         {!loadingManga && manga && (
           <>
             <Image
@@ -108,18 +108,18 @@ export default function DetailManga() {
               alt="Cover Image"
               quality={50}
             />
-            <div className="md:w-2/3 md:ml-3 mt-3">
-              <p className="text-2xl md:text-3xl mt-5 mb-2">{manga.title}</p>
-              <p className="capitalize text-gray-300">{manga.status}</p>
+            <div className="mt-3 md:w-2/3 md:ml-3">
+              <p className="mt-5 mb-2 text-2xl md:text-3xl">{manga.title}</p>
+              <p className="text-gray-300 capitalize">{manga.status}</p>
               {manga.altTitles && (
-                <p className="capitalize text-gray-300 mb-2">
+                <p className="mb-2 text-gray-300 capitalize">
                   Alt Titles: {manga.altTitles}
                 </p>
               )}
               {manga.tags.map((tag) => (
                 <div
                   key={tag.id}
-                  className="px-2 py-1 mb-2 mr-2 border rounded border-white inline-block"
+                  className="inline-block px-2 py-1 mb-2 mr-2 border border-white rounded"
                 >
                   {tag.name}
                 </div>
@@ -132,11 +132,11 @@ export default function DetailManga() {
         {loadingManga && <DetailMangaSke />}
       </div>
       <div>
-        <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3">
+        <p className="pb-3 text-3xl text-white border-b border-white border-opacity-40">
           List Chapter
         </p>
         <select
-          className="text-black mb-2 ml-10 mt-5 p-1"
+          className="p-1 mt-5 mb-2 ml-10 text-black"
           name="language"
           onChange={handleChange}
           value={language}
@@ -144,21 +144,21 @@ export default function DetailManga() {
           <option value="en">English</option>
           <option value="vi">Vietnam</option>
         </select>
-        <div className="rounded overflow-y-auto w-2/3 h-96 mt-5 mx-auto">
+        <div className="w-2/3 mx-auto mt-5 overflow-y-auto rounded h-96">
           {chapters &&
             chapters.map((chapter: Chapter) => {
-              const date = new Date(chapter.data.attributes.publishAt);
+              const date = new Date(chapter.attributes.publishAt);
               return (
                 <Link
-                  key={chapter.data.id}
-                  href={`/chapter/${chapter.data.id}?language=${language}`}
+                  key={chapter.id}
+                  href={`/chapter/${chapter.id}?language=${language}`}
                 >
                   <a>
-                    <div className="py-1 px-4 flex justify-between">
+                    <div className="flex justify-between px-4 py-1">
                       <p>
-                        Chapter {chapter.data.attributes.chapter}
-                        {chapter.data.attributes.title &&
-                          ` - ${chapter.data.attributes.title}`}
+                        Chapter {chapter.attributes.chapter}
+                        {chapter.attributes.title &&
+                          ` - ${chapter.attributes.title}`}
                       </p>
                       <p>
                         {date &&

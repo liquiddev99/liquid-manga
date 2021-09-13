@@ -25,16 +25,16 @@ function Header() {
 
   useEffect(() => {
     axios.get("/api/manga/tag").then((res) => {
-      const data: Tag[] = res.data;
+      const data: Tag[] = res.data.data;
       data.sort((a: Tag, b: Tag) =>
-        a.data.attributes.name.en.localeCompare(b.data.attributes.name.en)
+        a.attributes.name.en.localeCompare(b.attributes.name.en)
       );
       setTags(data);
     });
   }, []);
 
   return (
-    <div className="w-full bg-top relative">
+    <div className="relative w-full bg-top">
       <div
         className={`absolute top-full z-20 left-0 w-screen bg-middle origin-top transition duration-500 transform lg:hidden ${
           open ? "scale-y-100" : "scale-y-0"
@@ -42,17 +42,17 @@ function Header() {
       >
         <div className="w-5/6 mx-auto">
           <form
-            className="bg-white rounded items-center flex text-sm mt-3 justify-between mb-2"
+            className="flex items-center justify-between mt-3 mb-2 text-sm bg-white rounded"
             onSubmit={onSubmit}
           >
             <input
               placeholder="Search"
-              className="text-gray-700 py-1 px-2 rounded outline-none border-none"
+              className="px-2 py-1 text-gray-700 border-none rounded outline-none"
               onChange={(e) => setInput(e.target.value)}
               value={input}
             />
             <button type="submit" className="px-2">
-              <SearchIcon className="h-5 w-5" />
+              <SearchIcon className="w-5 h-5" />
             </button>
           </form>
           <Link href="/">
@@ -67,20 +67,20 @@ function Header() {
           </Link>
 
           <div className="relative group">
-            <div className="text-white text-sm md:text-base flex items-center cursor-pointer mb-2">
+            <div className="flex items-center mb-2 text-sm text-white cursor-pointer md:text-base">
               Genres
-              <ChevronDownIcon className="h-5 w-5" />
+              <ChevronDownIcon className="w-5 h-5" />
             </div>
-            <div className="bg-bottom rounded text-white absolute top-full hidden group-hover:block w-full z-30">
-              <div className="w-5/6 text-sm mx-auto grid grid-cols-2 md:grid-cols-3 gap-3 my-4">
+            <div className="absolute z-30 hidden w-full text-white bg-bottom rounded top-full group-hover:block">
+              <div className="w-5/6 mx-auto my-4 text-sm grid grid-cols-2 md:grid-cols-3 gap-3">
                 {tags &&
                   tags.map((tag: Tag) => (
                     <Link
-                      key={tag.data.id}
-                      href={`/search/includedTags[]=${tag.data.id}`}
+                      key={tag.id}
+                      href={`/search/includedTags[]=${tag.id}`}
                     >
                       <a onClick={() => setOpen(false)}>
-                        {tag.data.attributes.name.en}
+                        {tag.attributes.name.en}
                       </a>
                     </Link>
                   ))}
@@ -93,43 +93,41 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className="container flex py-3 justify-between items-center z-30">
+      <div className="container z-30 flex items-center justify-between py-3">
         <Link href="/">
-          <a className="text-white text-3xl md:text-4xl font-dancing">
+          <a className="text-3xl text-white md:text-4xl font-dancing">
             Liquid Manga
           </a>
         </Link>
         <div
-          className="lg:hidden bg-white rounded cursor-pointer"
+          className="bg-white rounded cursor-pointer lg:hidden"
           onClick={() => setOpen(!open)}
         >
           {open ? (
-            <XIcon className="h-6 w-6 p-1" />
+            <XIcon className="w-6 h-6 p-1" />
           ) : (
-            <MenuIcon className="h-6 w-6 p-1" />
+            <MenuIcon className="w-6 h-6 p-1" />
           )}
         </div>
 
-        <div className="lg:flex flex-row items-center hidden">
+        <div className="flex-row items-center hidden lg:flex">
           <Link href="/">
             <a className="link">Home</a>
           </Link>
-          <div className="relative group ml-4 md:ml-8">
-            <div className="text-white text-sm md:text-base flex items-center cursor-pointer">
+          <div className="relative ml-4 group md:ml-8">
+            <div className="flex items-center text-sm text-white cursor-pointer md:text-base">
               Genres
-              <ChevronDownIcon className="h-5 w-5" />
+              <ChevronDownIcon className="w-5 h-5" />
             </div>
-            <div className="bg-middle rounded text-white absolute top-full hidden group-hover:block w-3-quarter-screen z-10 -right-96">
-              <div className="w-full grid lg:grid-cols-5 xl:grid-cols-6 gap-2 my-4">
+            <div className="absolute z-10 hidden text-white rounded bg-middle top-full group-hover:block w-3-quarter-screen -right-96">
+              <div className="w-full my-4 grid lg:grid-cols-5 xl:grid-cols-6 gap-2">
                 {tags &&
                   tags.map((tag: Tag) => (
                     <Link
-                      key={tag.data.id}
-                      href={`/search/includedTags[]=${tag.data.id}`}
+                      key={tag.id}
+                      href={`/search/includedTags[]=${tag.id}`}
                     >
-                      <a className="text-center">
-                        {tag.data.attributes.name.en}
-                      </a>
+                      <a className="text-center">{tag.attributes.name.en}</a>
                     </Link>
                   ))}
 
@@ -144,17 +142,17 @@ function Header() {
           </Link>
 
           <form
-            className="bg-white rounded ml-8 items-center hidden md:flex"
+            className="items-center hidden ml-8 bg-white rounded md:flex"
             onSubmit={onSubmit}
           >
             <input
               placeholder="Search"
-              className="text-gray-700 py-1 px-2 rounded outline-none border-none"
+              className="px-2 py-1 text-gray-700 border-none rounded outline-none"
               onChange={(e) => setInput(e.target.value)}
               value={input}
             />
             <button type="submit" className="px-2">
-              <SearchIcon className="h-5 w-5" />
+              <SearchIcon className="w-5 h-5" />
             </button>
           </form>
         </div>

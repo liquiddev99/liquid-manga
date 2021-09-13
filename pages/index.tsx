@@ -149,24 +149,26 @@ export const getStaticProps: GetStaticProps = async () => {
     `${process.env.BASE_URL_DEX}/manga?contentRating[]=safe&limit=60`
   );
   const dataSuggest: IResponse = resSuggest.data;
-  const resultSuggest: Result[] = dataSuggest.results;
+  const resultSuggest: Result[] = dataSuggest.data;
   const dataSafe: IResponse = resSafe.data;
-  const resultSafe: Result[] = dataSafe.results;
+  const resultSafe: Result[] = dataSafe.data;
 
   const coverIdsSuggest = getCoverIds(resultSuggest);
   const queryIdsSuggest = "?ids[]=" + coverIdsSuggest.join("&ids[]=");
   const coverInfoSuggestRes = await axios.get(
     `${process.env.BASE_URL_DEX}/cover${queryIdsSuggest}&limit=4`
   );
-  const coverInfosSuggest: { results: ICoverInfo[] } = coverInfoSuggestRes.data;
+  console.log(coverInfoSuggestRes.data);
+  const coverInfosSuggest: { data: ICoverInfo[] } = coverInfoSuggestRes.data;
 
   const coverIdsSafe = getCoverIds(resultSafe);
   const queryIdsSafe = "?ids[]=" + coverIdsSafe.join("&ids[]=");
   const coverInfoSafeRes = await axios.get(
     `${process.env.BASE_URL_DEX}/cover${queryIdsSafe}&limit=60`
   );
-  const coverInfosSafe: { results: ICoverInfo[] } = coverInfoSafeRes.data;
+  const coverInfosSafe: { data: ICoverInfo[] } = coverInfoSafeRes.data;
 
+  //console.log(coverInfosSuggest);
   const mangaSuggest = getListManga(resultSuggest, coverInfosSuggest);
   const mangaSafe = getListManga(resultSafe, coverInfosSafe);
 

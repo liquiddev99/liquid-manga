@@ -10,7 +10,7 @@ export default async function GetMangaInfo(
   try {
     const { id } = req.query;
     const response = await axios.get(`https://api.mangadex.org/manga/${id}`);
-    const mangaInfo: Result = response.data;
+    const mangaInfo: Result = response.data.data;
 
     const coverId = mangaInfo.relationships.find(
       (relation) => relation.type === "cover_art"
@@ -20,24 +20,25 @@ export default async function GetMangaInfo(
     );
     const fileName = coverInfo.data.data.attributes.fileName;
 
-    const tags = mangaInfo.data.attributes.tags.map((tag: SubTag) => {
+    const tags = mangaInfo.attributes.tags.map((tag: SubTag) => {
       return { id: tag.id, name: tag.attributes.name.en };
     });
-    const altTitles = mangaInfo.data.attributes.altTitles
+    const altTitles = mangaInfo.attributes.altTitles
       .map((title: { en: string }) => title.en)
       .slice(0, 3)
       .join("; ");
 
     res.status(200).json({
       id,
-      title: mangaInfo.data.attributes.title.en,
+      title: mangaInfo.attributes.title.en,
       altTitles,
-      description: mangaInfo.data.attributes.description.en,
+      description: mangaInfo.attributes.description.en,
       tags,
-      urlImage: `https://uploads.mangadex.org/covers/${mangaInfo.data.id}/${fileName}`,
-      status: mangaInfo.data.attributes.status,
+      urlImage: `https://uploads.mangadex.org/covers/${mangaInfo.id}/${fileName}`,
+      status: mangaInfo.attributes.status,
     });
   } catch (err) {
-    return res.status(404).json({ msg: "Couldn't find this manga" });
+    console.log(err);
+    res.status(404).json({ msg: "Couldn't find this manga" });
   }
 }

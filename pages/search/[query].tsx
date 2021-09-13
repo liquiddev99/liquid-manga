@@ -27,7 +27,7 @@ export default function Search() {
     fetcher
   );
   const { data: coversImg, error: coversError } = useSWR(
-    () => "/api/cover?coverIds=" + getCoverIds(mangasInfo.results),
+    () => "/api/cover?coverIds=" + getCoverIds(mangasInfo.data),
     fetcher
   );
 
@@ -35,7 +35,8 @@ export default function Search() {
     setLoading(true);
     setListManga([]);
     if (!router.isReady || !mangasInfo) return;
-    if (mangasError || !mangasInfo.results.length) {
+    console.log(mangasInfo);
+    if (mangasError || !mangasInfo.data.length) {
       setLoading(false);
       setNotFound(true);
       return;
@@ -49,8 +50,8 @@ export default function Search() {
       setNotFound(true);
       return;
     }
-    if (!coversImg || !mangasInfo.results) return;
-    const mangas = getListManga(mangasInfo.results, coversImg);
+    if (!coversImg || !mangasInfo.data) return;
+    const mangas = getListManga(mangasInfo.data, coversImg);
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     setListManga(mangas);
     setLoading(false);
@@ -95,7 +96,7 @@ export default function Search() {
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
           Result
         </p>
-        <div className="responsive-list-manga mt-5">
+        <div className="mt-5 responsive-list-manga">
           {listManga.length
             ? listManga.map((manga: Manga) => (
                 <Link key={manga.id} href={`/manga/${manga.id}`}>
@@ -113,7 +114,7 @@ export default function Search() {
             </>
           )}
           {notFound && (
-            <p className="text-white col-span-full h-screen">
+            <p className="h-screen text-white col-span-full">
               No results match search engine
             </p>
           )}

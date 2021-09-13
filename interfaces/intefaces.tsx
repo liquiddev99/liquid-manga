@@ -8,43 +8,35 @@ export type Manga = {
 
 export type Chapter = {
   result: string;
-  data: {
-    id: string;
-    type: string;
-    attributes: {
-      chapter: string;
-      title: string;
-      hash: string;
-      publishAt: string;
-    };
+  id: string;
+  type: string;
+  attributes: {
+    chapter: string;
+    title: string;
+    hash: string;
+    publishAt: string;
   };
 };
 
 export type Result = {
-  result: string;
-  data: {
-    id: string;
-    type: string;
-    attributes: {
-      title: { en: string };
-      description: { en: string };
-      status: string;
-      tags: [];
-      altTitles: [];
-    };
+  id: string;
+  type: string;
+  attributes: {
+    title: { en: string };
+    description: { en: string };
+    status: string;
+    tags: [];
+    altTitles: [];
   };
   relationships: [{ id: string; type: string }];
 };
 
 export interface Tag {
-  result: string;
-  data: {
-    attributes: {
-      name: { en: string };
-    };
-    id: string;
-    type: string;
+  id: string;
+  attributes: {
+    name: { en: string };
   };
+  type: string;
 }
 
 export type SubTag = {
@@ -58,7 +50,7 @@ export type SubTag = {
 };
 
 export interface IResponse {
-  results: Result[];
+  data: Result[];
   limit: number;
   offset: number;
   total: number;
@@ -70,11 +62,8 @@ export interface IPropsListManga {
 }
 
 export interface ICoverInfo {
-  result: string;
-  data: {
-    attributes: {
-      fileName: string;
-    };
+  attributes: {
+    fileName: string;
   };
   relationships: [{ id: string; type: string }];
 }

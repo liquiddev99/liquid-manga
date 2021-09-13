@@ -15,23 +15,23 @@ export const getCoverIds = (listManga: Result[]) => {
 
 export const getListManga = (
   results: Result[],
-  coverInfos: { results: ICoverInfo[] }
+  coverInfos: { data: ICoverInfo[] }
 ) => {
   const listManga = results.map((result: Result) => {
-    const coverArt: ICoverInfo = coverInfos.results.find(
+    const coverArt: ICoverInfo = coverInfos.data.find(
       (coverInfo: ICoverInfo) => {
         const mangaRelation = coverInfo.relationships.find(
           (relation) => relation.type === "manga"
         )!;
-        return mangaRelation.id === result.data.id;
+        return mangaRelation.id === result.id;
       }
     )!;
     return {
-      id: result.data.id,
-      title: result.data.attributes.title.en,
-      description: result.data.attributes.description.en,
-      urlImage: `https://uploads.mangadex.org/covers/${result.data.id}/${coverArt.data.attributes.fileName}`,
-      status: result.data.attributes.status,
+      id: result.id,
+      title: result.attributes.title.en,
+      description: result.attributes.description.en,
+      urlImage: `https://uploads.mangadex.org/covers/${result.id}/${coverArt.attributes.fileName}`,
+      status: result.attributes.status,
     };
   });
   return listManga;
@@ -47,7 +47,7 @@ export const getListChapter = async (mangaId: string, language = "en") => {
   const count = Math.floor(total / 100);
   let listChapter: Chapter[] = [];
   const promises = [];
-  listChapter = listChapter.concat(data.results);
+  listChapter = listChapter.concat(data.data);
 
   for (let i = 1; i <= count; i++) {
     promises.push(
@@ -58,7 +58,7 @@ export const getListChapter = async (mangaId: string, language = "en") => {
           }&language=${language}`
         )
         .then((res) => {
-          listChapter = listChapter.concat(res.data.results);
+          listChapter = listChapter.concat(res.data.data);
         })
     );
   }
@@ -66,14 +66,11 @@ export const getListChapter = async (mangaId: string, language = "en") => {
   await Promise.all(promises);
   listChapter.sort(
     (a: Chapter, b: Chapter) =>
-      Number(a.data.attributes.chapter) - Number(b.data.attributes.chapter)
+      Number(a.attributes.chapter) - Number(b.attributes.chapter)
   );
   listChapter = listChapter.filter((chapter, index, array) => {
     if (!array[index + 1]) return true;
-    return (
-      chapter.data.attributes.chapter !==
-      array[index + 1].data.attributes.chapter
-    );
+    return chapter.attributes.chapter !== array[index + 1].attributes.chapter;
   });
   return listChapter;
 };
