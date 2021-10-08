@@ -20,6 +20,7 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
           width={230}
           height={280}
           alt="Manga Cover Image"
+          priority={true}
           onLoad={() => {
             setIsLoaded(true);
           }}
@@ -37,7 +38,7 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
           />
         </div>
       )}
-      <div className="m-2 flex flex-col justify-between flex-grow">
+      <div className="flex flex-col justify-between flex-grow m-2">
         <p className="text-base font-bold text-gray-800 line-clamp-2">
           {manga.title ? manga.title : "Updating name..."}
         </p>
