@@ -12,7 +12,7 @@ export default async function GetCoverImage(
     const queryIds = "?ids[]=" + coverIdsArray.join("&ids[]=");
 
     const response = await axios.get(
-      `https://api.mangadex.org/cover${queryIds}&limit=100`
+      `https://api.mangadex.org/cover${queryIds}&limit=54`
     );
 
     res.status(200).json(response.data);

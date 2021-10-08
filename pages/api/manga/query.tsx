@@ -11,8 +11,8 @@ export default async function QueryManga(
     let query = req.query.query as string;
     query = query.split("_").join("&");
     const response = await axios.get(
-      `https://api.mangadex.org/manga?${query}&limit=100&offset=${
-        (parseInt(p) - 1) * 100
+      `https://api.mangadex.org/manga?${query}&limit=54&offset=${
+        (parseInt(p) - 1) * 54
       }`
     );
     res.status(200).json(response.data);
