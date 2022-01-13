@@ -22,6 +22,16 @@ interface Data {
   };
 }
 
+interface imgData {
+  result: string;
+  baseUrl: string;
+  chapter: {
+    hash: string;
+    data: [];
+    dataSaver: [];
+  };
+}
+
 export default function ChapterDetail(props: {
   base_url: string;
   temp_token: string;
@@ -33,7 +43,6 @@ export default function ChapterDetail(props: {
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [mangaId, setMangaId] = useState("");
   const [loading, setLoading] = useState(true);
-  const [notFound, setNotFound] = useState(false);
   const [disablePrev, setDisablePrev] = useState(false);
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -46,7 +55,19 @@ export default function ChapterDetail(props: {
     const data: Data = res.data;
     return data;
   };
+
+  const imgFetcher = async (url: string) => {
+    setLoading(true);
+    const res = await axios.get(url);
+    setLoading(false);
+    const data: imgData = res.data;
+    return data;
+  };
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
+  const { data: imgData, error: imgError } = useSWR(
+    `/api/chapter/at-home?id=${id}`,
+    imgFetcher
+  );
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     router.push(e.target.value);
@@ -181,8 +202,10 @@ export default function ChapterDetail(props: {
           </div>
         </div>
       )}
-      {data &&
-        data.data.attributes.data.map((fileName: string) => (
+      {imgData &&
+        !loading &&
+        imgData.chapter.dataSaver.length > 0 &&
+        imgData.chapter.dataSaver.map((fileName: string) => (
           <div className="w-full image-container" key={fileName}>
             {/* <div className="relative text-white aspect-w-3 aspect-h-4"> */}
             {/* <Image
@@ -195,7 +218,7 @@ export default function ChapterDetail(props: {
               objectFit="contain"
             /> */}
             <img
-              src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
+              src={`${base_url}/${temp_token}/data-saver/${imgData.chapter.hash}/${fileName}`}
               alt="fetching image..."
               className="object-contain w-auto h-auto mx-auto"
             />
@@ -203,7 +226,11 @@ export default function ChapterDetail(props: {
           </div>
         ))}
 
-      {!loading && chapters && (
+      {!loading && imgData && imgData.chapter.dataSaver.length == 0 && (
+        <div className="text-white">Can't find image of this chapter</div>
+      )}
+
+      {imgData && imgData.chapter.dataSaver.length > 0 && !loading && chapters && (
         <div className="relative flex items-center justify-end w-full my-5 md:justify-center">
           <div
             className="absolute left-0 flex items-center px-2 font-bold text-white bg-green-500 rounded cursor-pointer lg:left-36 h-9"
