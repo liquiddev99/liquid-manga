@@ -2,6 +2,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
@@ -57,16 +58,19 @@ export default function ChapterDetail(props: {
   };
 
   const imgFetcher = async (url: string) => {
-    setLoading(true);
     const res = await axios.get(url);
     setLoading(false);
     const data: imgData = res.data;
     return data;
   };
-  const { data, error } = useSWR(`/api/chapter/${id}`, fetcher);
+  const { data, error } = useSWR(`/api/chapter/${id}`, fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
   const { data: imgData, error: imgError } = useSWR(
     `/api/chapter/at-home?id=${id}`,
-    imgFetcher
+    imgFetcher,
+    { revalidateOnFocus: false, revalidateOnReconnect: false }
   );
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -115,6 +119,7 @@ export default function ChapterDetail(props: {
     if (!chapters) return;
     setDisablePrev(false);
     setDisableNext(false);
+    console.log(imgData);
     const currIndex = chapters.findIndex((chapter) => chapter.id === id);
     if (chapters[currIndex + 1]) {
       router.prefetch(
@@ -204,8 +209,8 @@ export default function ChapterDetail(props: {
       )}
       {imgData &&
         !loading &&
-        imgData.chapter.dataSaver.length > 0 &&
-        imgData.chapter.dataSaver.map((fileName: string) => (
+        imgData.chapter.data.length > 0 &&
+        imgData.chapter.data.map((fileName: string) => (
           <div className="w-full image-container" key={fileName}>
             {/* <div className="relative text-white aspect-w-3 aspect-h-4"> */}
             {/* <Image
@@ -218,7 +223,7 @@ export default function ChapterDetail(props: {
               objectFit="contain"
             /> */}
             <img
-              src={`${base_url}/${temp_token}/data-saver/${imgData.chapter.hash}/${fileName}`}
+              src={`${base_url}/data/${imgData.chapter.hash}/${fileName}`}
               alt="fetching image..."
               className="object-contain w-auto h-auto mx-auto"
             />
