@@ -32,18 +32,18 @@ interface imgData {
   };
 }
 
-export default function ChapterDetail(props: { imgData: imgData }) {
+export default function ChapterDetail() {
   const router = useRouter();
   let { id } = router.query;
   let language = router.query.language as string;
   language = language || "en";
-  const { imgData } = props;
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [mangaId, setMangaId] = useState("");
   const [loading, setLoading] = useState(true);
   const [disablePrev, setDisablePrev] = useState(false);
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [buffer, setBuffer] = useState("");
 
   const fetcher = async (url: string) => {
     setLoading(true);
@@ -53,21 +53,22 @@ export default function ChapterDetail(props: { imgData: imgData }) {
     return data;
   };
 
-  //const imgFetcher = async (url: string) => {
-  //const res = await axios.get(url);
-  //setLoading(false);
-  //const data: imgData = res.data;
-  //return data;
-  //};
+  const imgFetcher = async (url: string) => {
+    const res = await axios.get(url);
+    setLoading(false);
+    const data: imgData = res.data;
+
+    return data;
+  };
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-  //const { data: imgData, error: imgError } = useSWR(
-  //`/api/chapter/at-home?id=${id}`,
-  //imgFetcher,
-  //{ revalidateOnFocus: false, revalidateOnReconnect: false }
-  //);
+  const { data: imgData, error: imgError } = useSWR(
+    `/api/chapter/at-home?id=${id}`,
+    imgFetcher,
+    { revalidateOnFocus: false, revalidateOnReconnect: false }
+  );
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     router.push(e.target.value);
@@ -110,11 +111,23 @@ export default function ChapterDetail(props: { imgData: imgData }) {
   // useEffect(() => {
   //   console.log("router change");
   // }, [router.query.id]);
+  useEffect(() => {
+    axios
+      .get(
+        "https://uploads.mangadex.org/data/3a30f37d07a2730dc271f78388cba69e/1-ca311670693bd343680e949594864a869159e942d8a2d1e21d54f810bd3757f1.png",
+        { responseType: "arraybuffer" }
+      )
+      .then((res) => {
+        const buffer = Buffer.from(res.data, "binary").toString("base64");
+        setBuffer(buffer);
+      });
+  }, []);
 
   useEffect(() => {
     if (!chapters) return;
     setDisablePrev(false);
     setDisableNext(false);
+    console.log(imgData);
     const currIndex = chapters.findIndex((chapter) => chapter.id === id);
     if (chapters[currIndex + 1]) {
       router.prefetch(
@@ -202,6 +215,7 @@ export default function ChapterDetail(props: { imgData: imgData }) {
           </div>
         </div>
       )}
+      {buffer && <img src={`data:image/jpeg;base64,${buffer}`} />}
       {imgData &&
         !loading &&
         imgData.chapter.data.length > 0 &&
@@ -275,12 +289,8 @@ export default function ChapterDetail(props: { imgData: imgData }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  const { id } = context.query;
-  const res = await axios.get(`https://api.mangadex.org/at-home/server/${id}`);
-  const imgData = res.data;
-  console.log(res.data);
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
-    props: { imgData },
+    props: {},
   };
 };
