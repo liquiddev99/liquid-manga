@@ -2,6 +2,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
+import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
@@ -111,17 +112,17 @@ export default function ChapterDetail() {
   // useEffect(() => {
   //   console.log("router change");
   // }, [router.query.id]);
-  useEffect(() => {
-    axios
-      .get(
-        "https://uploads.mangadex.org/data/3a30f37d07a2730dc271f78388cba69e/1-ca311670693bd343680e949594864a869159e942d8a2d1e21d54f810bd3757f1.png",
-        { responseType: "arraybuffer" }
-      )
-      .then((res) => {
-        const buffer = Buffer.from(res.data, "binary").toString("base64");
-        setBuffer(buffer);
-      });
-  }, []);
+  //useEffect(() => {
+  //axios
+  //.get(
+  //"https://uploads.mangadex.org/data/3a30f37d07a2730dc271f78388cba69e/1-ca311670693bd343680e949594864a869159e942d8a2d1e21d54f810bd3757f1.png",
+  //{ responseType: "arraybuffer" }
+  //)
+  //.then((res) => {
+  //const buffer = Buffer.from(res.data, "binary").toString("base64");
+  //setBuffer(buffer);
+  //});
+  //}, []);
 
   useEffect(() => {
     if (!chapters) return;
@@ -215,7 +216,6 @@ export default function ChapterDetail() {
           </div>
         </div>
       )}
-      {buffer && <img src={`data:image/jpeg;base64,${buffer}`} />}
       {imgData &&
         !loading &&
         imgData.chapter.data.length > 0 &&
@@ -231,10 +231,9 @@ export default function ChapterDetail() {
               priority={true}
               objectFit="contain"
             /> */}
-            <img
+            <Image
               src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
-              alt="fetching image..."
-              className="object-contain w-auto h-auto mx-auto"
+              layout="fill"
             />
             {/* </div> */}
           </div>
