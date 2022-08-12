@@ -1,12 +1,4 @@
 module.exports = {
-  //async rewrites() {
-  //return [
-  //{
-  //source: "/api/:path*",
-  //destination: "https://uploads.mangadex.org/"
-  //}
-  //]
-  //},
   images: {
     domains: [
       "uploads.mangadex.org",

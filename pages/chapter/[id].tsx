@@ -4,7 +4,7 @@ import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 import useSWR from "swr";
 import { getListChapter } from "../../helpers/getMangaInfo";
 import { Chapter } from "../../interfaces/intefaces";
@@ -44,7 +44,8 @@ export default function ChapterDetail() {
   const [disablePrev, setDisablePrev] = useState(false);
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [buffer, setBuffer] = useState("");
+  const [width, setWidth] = useState(800);
+  const [height, setHeight] = useState(1200);
 
   const fetcher = async (url: string) => {
     setLoading(true);
@@ -58,7 +59,18 @@ export default function ChapterDetail() {
     const res = await axios.get(url);
     setLoading(false);
     const data: imgData = res.data;
+    const promises: any = [];
+    data.chapter.data.map((fileName: string) => {
+      console.log(fileName);
+      //promises.push(
+      //probe(`${data.baseUrl}/data/${data.chapter.hash}/${fileName}`).then(
+      //(res) => res
+      //)
+      //);
+    });
+    await Promise.all(promises);
 
+    console.log(data);
     return data;
   };
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher, {
@@ -128,7 +140,6 @@ export default function ChapterDetail() {
     if (!chapters) return;
     setDisablePrev(false);
     setDisableNext(false);
-    console.log(imgData);
     const currIndex = chapters.findIndex((chapter) => chapter.id === id);
     if (chapters[currIndex + 1]) {
       router.prefetch(
@@ -220,7 +231,11 @@ export default function ChapterDetail() {
         !loading &&
         imgData.chapter.data.length > 0 &&
         imgData.chapter.data.map((fileName: string) => (
-          <div className="w-full image-container" key={fileName}>
+          <div
+            className="2xl:w-2/3 xl:w-3/4 w-full relative"
+            style={{ height: "120vh" }}
+            key={fileName}
+          >
             {/* <div className="relative text-white aspect-w-3 aspect-h-4"> */}
             {/* <Image
               src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
@@ -234,7 +249,18 @@ export default function ChapterDetail() {
             <Image
               src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
               layout="fill"
+              //onLoadingComplete={(result) => {
+              //setWidth(result.naturalWidth * 100);
+              //setHeight(result.naturalHeight * 100);
+              //}}
             />
+            {/*
+              <img
+                src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
+                alt="fetching image..."
+                className="object-contain w-auto h-auto mx-auto"
+              />
+              */}{" "}
             {/* </div> */}
           </div>
         ))}
@@ -287,9 +313,3 @@ export default function ChapterDetail() {
     </div>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async () => {
-  return {
-    props: {},
-  };
-};

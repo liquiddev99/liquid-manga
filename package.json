@@ -14,8 +14,9 @@
     "@tailwindcss/line-clamp": "^0.2.1",
     "axios": "^0.21.1",
     "embla-carousel": "^4.5.3",
-    "next": "^11.0.0",
+    "next": "^12.2.5",
     "next-seo": "^4.26.0",
+    "probe-image-size": "^7.2.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.2.0",
@@ -27,6 +28,7 @@
   "devDependencies": {
     "@types/next": "^9.0.0",
     "@types/node": "^16.4.3",
+    "@types/probe-image-size": "^7.2.0",
     "@types/react": "17.0.9",
     "@types/react-dom": "^17.0.9",
     "autoprefixer": "^10.2.6",
