@@ -49,7 +49,6 @@ export default function ChapterDetail() {
 
   const mangaFetcher = async (url: string) => {
     const res = await axios.get(url);
-    console.log(res.data);
     if (
       res.data.tags.some(
         (tag: any) => tag.name == "Long Strip" || tag.name == "Web Comic"
@@ -74,7 +73,6 @@ export default function ChapterDetail() {
     const res = await axios.get(url);
     setLoading(false);
     const data: imgData = res.data;
-    console.log(data);
     return data;
   };
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher, {

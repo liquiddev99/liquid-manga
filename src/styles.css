@@ -31,7 +31,7 @@
 
 @layer components {
   .container {
-    @apply mx-auto max-w-screen-xl w-10/12 md:w-11/12;
+    @apply mx-auto w-10/12 md:w-11/12;
   }
   .link {
     @apply text-white text-sm md:text-base lg:ml-8 flex items-center mb-2 lg:mb-0;
@@ -47,4 +47,3 @@
 .paginate {
   @apply flex items-center justify-center h-7 w-7 m-1 rounded cursor-pointer;
 }
-

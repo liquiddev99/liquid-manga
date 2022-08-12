@@ -161,7 +161,6 @@ export const getStaticProps: GetStaticProps = async () => {
   const coverInfoSuggestRes = await axios.get(
     `${process.env.BASE_URL_DEX}/cover${queryIdsSuggest}&limit=4`
   );
-  console.log(coverInfoSuggestRes.data);
   const coverInfosSuggest: { data: ICoverInfo[] } = coverInfoSuggestRes.data;
 
   const coverIdsSafe = getCoverIds(resultSafe);
