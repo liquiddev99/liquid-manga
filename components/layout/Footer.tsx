@@ -8,7 +8,7 @@ import {
 function Footer() {
   return (
     <div className="bg-gradient-to-t from-top via-middle to-bottom text-white">
-      <div className="container grid grid-cols-1 md:grid-cols-3 gap-3 pb-6 pt-56">
+      <div className="container max-w-screen-xl grid grid-cols-1 md:grid-cols-3 gap-3 pb-6 pt-56">
         <div className="text-center md:text-left">
           <p className="text-4xl font-dancing mb-4">Liquid Manga</p>
           <p className="my-2 text-sm">

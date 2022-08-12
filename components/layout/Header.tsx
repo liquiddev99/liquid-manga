@@ -93,7 +93,7 @@ function Header() {
           </div>
         </div>
       </div>
-      <div className="container z-30 flex items-center justify-between py-3">
+      <div className="container max-w-screen-xl z-30 flex items-center justify-between py-3">
         <Link href="/">
           <a className="text-3xl text-white md:text-4xl font-dancing">
             Liquid Manga

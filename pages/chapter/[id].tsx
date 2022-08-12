@@ -177,13 +177,13 @@ export default function ChapterDetail() {
   // if (error && error.response.status === 404) return <NotFound />;
   if (error) {
     return (
-      <p className="container h-screen my-2 text-white">
+      <p className="container max-w-screen-xl h-screen my-2 text-white">
         Can&#39;t find this chapter
       </p>
     );
   }
   return (
-    <div className="container flex flex-col items-center min-h-screen">
+    <div className="container max-w-screen-xl flex flex-col items-center min-h-screen">
       <Head>
         <title>
           {data?.data.attributes.title
