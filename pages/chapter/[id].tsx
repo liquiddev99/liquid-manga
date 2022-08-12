@@ -184,9 +184,8 @@ export default function ChapterDetail() {
     <div className="container max-w-screen-xl flex flex-col items-center min-h-screen">
       <Head>
         <title>
-          {data?.data.attributes.title
-            ? data.data.attributes.title
-            : `Chapter ${data?.data.attributes.chapter}`}
+          Chapter {data?.data.attributes.chapter}
+          {data?.data.attributes.title && ` - ${data.data.attributes.title}`}
         </title>
       </Head>
       {!loading && chapters && (
