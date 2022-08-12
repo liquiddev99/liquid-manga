@@ -223,7 +223,7 @@ export default function ChapterDetail(props: {
               objectFit="contain"
             /> */}
             <img
-              src={`${base_url}/data/${imgData.chapter.hash}/${fileName}`}
+              src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
               alt="fetching image..."
               className="object-contain w-auto h-auto mx-auto"
             />
