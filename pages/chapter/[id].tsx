@@ -2,7 +2,6 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
 import { GetServerSideProps } from "next";
 import Head from "next/head";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
@@ -33,21 +32,18 @@ interface imgData {
   };
 }
 
-export default function ChapterDetail(props: {
-  base_url: string;
-  temp_token: string;
-}) {
+export default function ChapterDetail(props: { imgData: imgData }) {
   const router = useRouter();
   let { id } = router.query;
   let language = router.query.language as string;
   language = language || "en";
+  const { imgData } = props;
   const [chapters, setChapters] = useState<Chapter[]>([]);
   const [mangaId, setMangaId] = useState("");
   const [loading, setLoading] = useState(true);
   const [disablePrev, setDisablePrev] = useState(false);
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { base_url, temp_token } = props;
 
   const fetcher = async (url: string) => {
     setLoading(true);
@@ -57,21 +53,21 @@ export default function ChapterDetail(props: {
     return data;
   };
 
-  const imgFetcher = async (url: string) => {
-    const res = await axios.get(url);
-    setLoading(false);
-    const data: imgData = res.data;
-    return data;
-  };
+  //const imgFetcher = async (url: string) => {
+  //const res = await axios.get(url);
+  //setLoading(false);
+  //const data: imgData = res.data;
+  //return data;
+  //};
   const { data, error } = useSWR(`/api/chapter/${id}`, fetcher, {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-  const { data: imgData, error: imgError } = useSWR(
-    `/api/chapter/at-home?id=${id}`,
-    imgFetcher,
-    { revalidateOnFocus: false, revalidateOnReconnect: false }
-  );
+  //const { data: imgData, error: imgError } = useSWR(
+  //`/api/chapter/at-home?id=${id}`,
+  //imgFetcher,
+  //{ revalidateOnFocus: false, revalidateOnReconnect: false }
+  //);
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     router.push(e.target.value);
@@ -119,7 +115,6 @@ export default function ChapterDetail(props: {
     if (!chapters) return;
     setDisablePrev(false);
     setDisableNext(false);
-    console.log(imgData);
     const currIndex = chapters.findIndex((chapter) => chapter.id === id);
     if (chapters[currIndex + 1]) {
       router.prefetch(
@@ -280,11 +275,12 @@ export default function ChapterDetail(props: {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.query;
+  const res = await axios.get(`https://api.mangadex.org/at-home/server/${id}`);
+  const imgData = res.data;
+  console.log(res.data);
   return {
-    props: {
-      base_url: process.env.BASE_URL,
-      temp_token: process.env.TEMP_TOKEN,
-    },
+    props: { imgData },
   };
 };
