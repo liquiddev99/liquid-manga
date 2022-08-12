@@ -92,7 +92,7 @@ export default function Search() {
       <Head>
         <title>Search</title>
       </Head>
-      <div className="container max-w-screen-xl">
+      <div className="container max-w-screen-xl w-10/12 md:w-11/12">
         <p className="text-white text-3xl border-b border-opacity-40 border-white pb-3 mt-3">
           Result
         </p>

@@ -1,10 +1,8 @@
 import type { AppProps } from "next/app";
-import "tailwindcss/tailwind.css";
 import Head from "next/head";
+import "../src/styles.css";
 import "tailwindcss/tailwind.css";
 import { NextSeo } from "next-seo";
-
-import "../src/styles.css";
 
 import LayoutPage from "../components/layout/Layout";
 

@@ -93,7 +93,7 @@ export default function DetailManga() {
   // if (error && error.response.status === 404) return <NotFound />;
 
   return (
-    <div className="text-white max-w-screen-xl container">
+    <div className="text-white max-w-screen-xl container w-10/12 md:w-11/12">
       <Head>
         <title>{manga ? manga.title : "Manga"}</title>
       </Head>

@@ -54,7 +54,7 @@ function AdvancedSearch(props: { tags: Tag[] }) {
       <Head>
         <title>Liquid Manga | Advanced Search</title>
       </Head>
-      <div className="container max-w-screen-xl text-white">
+      <div className="container max-w-screen-xl w-10/12 md:w-11/12 text-white">
         <p className="mt-4 text-2xl border-b border-opacity-40 border-white pb-3">
           Advanced Search
         </p>

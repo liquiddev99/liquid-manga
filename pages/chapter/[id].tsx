@@ -1,10 +1,9 @@
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/solid";
 import axios from "axios";
-import { GetServerSideProps } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import useSWR from "swr";
 import { getListChapter } from "../../helpers/getMangaInfo";
 import { Chapter } from "../../interfaces/intefaces";
@@ -172,16 +171,16 @@ export default function ChapterDetail() {
       setChapters(res);
     });
   }, [data, language]);
-  // if (error && error.response.status === 404) return <NotFound />;
+
   if (error) {
     return (
-      <p className="container max-w-screen-xl h-screen my-2 text-white">
+      <p className="container w-10/12 md:w-11/12 max-w-screen-xl h-screen my-2 text-white">
         Can&#39;t find this chapter
       </p>
     );
   }
   return (
-    <div className="container max-w-screen-xl flex flex-col items-center min-h-screen">
+    <div className="container max-w-screen-xl w-10/12 md:w-11/12 flex flex-col items-center min-h-screen">
       <Head>
         <title>
           Chapter {data?.data.attributes.chapter}
