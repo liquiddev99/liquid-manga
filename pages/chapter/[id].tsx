@@ -44,8 +44,23 @@ export default function ChapterDetail() {
   const [disablePrev, setDisablePrev] = useState(false);
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [width, setWidth] = useState(800);
-  const [height, setHeight] = useState(1200);
+  const [width, setWidth] = useState(850);
+  const [height, setHeight] = useState(1100);
+
+  const mangaFetcher = async (url: string) => {
+    const res = await axios.get(url);
+    console.log(res.data);
+    if (
+      res.data.tags.some(
+        (tag: any) => tag.name == "Long Strip" || tag.name == "Web Comic"
+      )
+    ) {
+      setWidth(600);
+      setHeight(1300);
+    }
+  };
+
+  useSWR(mangaId ? `/api/manga/${mangaId}` : null, mangaFetcher);
 
   const fetcher = async (url: string) => {
     setLoading(true);
@@ -59,17 +74,6 @@ export default function ChapterDetail() {
     const res = await axios.get(url);
     setLoading(false);
     const data: imgData = res.data;
-    const promises: any = [];
-    data.chapter.data.map((fileName: string) => {
-      console.log(fileName);
-      //promises.push(
-      //probe(`${data.baseUrl}/data/${data.chapter.hash}/${fileName}`).then(
-      //(res) => res
-      //)
-      //);
-    });
-    await Promise.all(promises);
-
     console.log(data);
     return data;
   };
@@ -231,38 +235,16 @@ export default function ChapterDetail() {
         !loading &&
         imgData.chapter.data.length > 0 &&
         imgData.chapter.data.map((fileName: string) => (
-          <div
-            className="2xl:w-2/3 xl:w-3/4 w-full relative"
-            style={{ height: "120vh" }}
-            key={fileName}
-          >
-            {/* <div className="relative text-white aspect-w-3 aspect-h-4"> */}
-            {/* <Image
-              src={`${base_url}/${temp_token}/data/${data.data.attributes.hash}/${fileName}`}
-              alt="fetching image..."
-              layout="fill"
-              // sizes="75vw"
-              className="image"
-              priority={true}
-              objectFit="contain"
-            /> */}
+          <>
             <Image
               src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
-              layout="fill"
-              //onLoadingComplete={(result) => {
-              //setWidth(result.naturalWidth * 100);
-              //setHeight(result.naturalHeight * 100);
-              //}}
+              width={width}
+              height={height}
+              priority={true}
+              loading="eager"
+              key={fileName}
             />
-            {/*
-              <img
-                src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
-                alt="fetching image..."
-                className="object-contain w-auto h-auto mx-auto"
-              />
-              */}{" "}
-            {/* </div> */}
-          </div>
+          </>
         ))}
 
       {!loading && imgData && imgData.chapter.dataSaver.length == 0 && (
