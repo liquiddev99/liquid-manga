@@ -236,8 +236,8 @@ export default function ChapterDetail() {
               src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
               width={width}
               height={height}
-              priority={index < 7 ? true : false}
-              loading={index >= 7 ? "eager" : undefined}
+              priority={index < 4 ? true : false}
+              loading={index >= 4 ? "eager" : undefined}
               key={fileName}
             />
           </>
