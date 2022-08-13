@@ -239,6 +239,7 @@ export default function ChapterDetail() {
               priority={index < 4 ? true : false}
               loading={index >= 4 ? "eager" : undefined}
               key={fileName}
+              quality={50}
             />
           </>
         ))}
