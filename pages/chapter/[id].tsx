@@ -230,14 +230,14 @@ export default function ChapterDetail() {
       {imgData &&
         !loading &&
         imgData.chapter.data.length > 0 &&
-        imgData.chapter.data.map((fileName: string) => (
+        imgData.chapter.data.map((fileName: string, index: number) => (
           <>
             <Image
               src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
               width={width}
               height={height}
-              //priority={true}
-              loading="eager"
+              priority={index < 7 ? true : false}
+              loading={index >= 7 ? "eager" : undefined}
               key={fileName}
             />
           </>
