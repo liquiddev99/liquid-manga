@@ -44,7 +44,7 @@ export default function ChapterDetail() {
   const [disableNext, setDisableNext] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(850);
-  const [height, setHeight] = useState(1100);
+  const [height, setHeight] = useState(1150);
 
   const mangaFetcher = async (url: string) => {
     const res = await axios.get(url);
@@ -236,8 +236,8 @@ export default function ChapterDetail() {
               src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
               width={width}
               height={height}
-              priority={index < 4 ? true : false}
-              loading={index >= 4 ? "eager" : undefined}
+              priority={index < 2 ? true : false}
+              loading={index >= 2 ? "eager" : undefined}
               key={fileName}
               quality={50}
             />
