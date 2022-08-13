@@ -19,7 +19,7 @@ export default function ListManga(props: { manga: Manga; isStatic?: boolean }) {
           src={manga.urlImage}
           width={230}
           height={280}
-          alt="Manga Cover Image"
+          alt="Manga Cover"
           priority={true}
           onLoad={() => {
             setIsLoaded(true);
