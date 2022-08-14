@@ -240,7 +240,7 @@ export default function ChapterDetail() {
                   priority
                   quality={2}
                 />
-              ) : index == 2 ? (
+              ) : index == 4 ? (
                 <Image
                   src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
                   width={width}
