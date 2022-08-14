@@ -137,6 +137,9 @@ export default function ChapterDetail() {
   //setBuffer(buffer);
   //});
   //}, []);
+  useEffect(() => {
+    setLoadMode("lazy");
+  }, [router.query.id]);
 
   useEffect(() => {
     if (!chapters) return;
@@ -247,7 +250,7 @@ export default function ChapterDetail() {
                   height={height}
                   key={fileName}
                   loading={loadMode}
-                  lazyBoundary="2200px"
+                  lazyBoundary="2500px"
                   onLoadingComplete={() => {
                     setLoadMode("eager");
                   }}
@@ -260,7 +263,7 @@ export default function ChapterDetail() {
                   height={height}
                   key={fileName}
                   loading={loadMode}
-                  lazyBoundary="2200px"
+                  lazyBoundary="2500px"
                   quality={index == 1 ? 2 : 5}
                 />
               )}
