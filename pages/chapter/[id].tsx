@@ -227,22 +227,34 @@ export default function ChapterDetail() {
           </div>
         </div>
       )}
-      {imgData &&
-        !loading &&
-        imgData.chapter.data.length > 0 &&
-        imgData.chapter.data.map((fileName: string, index: number) => (
-          <>
-            <Image
-              src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
-              width={width}
-              height={height}
-              priority={index == 0 ? true : false}
-              loading={index > 0 ? "eager" : undefined}
-              key={fileName}
-              quality={index < 2 ? 5 : 15}
-            />
-          </>
-        ))}
+      {imgData && !loading && imgData.chapter.dataSaver.length > 0
+        ? imgData.chapter.dataSaver.map((fileName: string, index: number) => (
+            <>
+              <Image
+                src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
+                width={width}
+                height={height}
+                priority={index == 0 ? true : false}
+                loading={index > 0 ? "eager" : undefined}
+                key={fileName}
+                quality={index < 2 ? 5 : 15}
+              />
+            </>
+          ))
+        : imgData &&
+          imgData.chapter.data.map((fileName: string, index: number) => (
+            <>
+              <Image
+                src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
+                width={width}
+                height={height}
+                priority={index == 0 ? true : false}
+                loading={index > 0 ? "eager" : undefined}
+                key={fileName}
+                quality={index < 2 ? 5 : 15}
+              />
+            </>
+          ))}
 
       {!loading && imgData && imgData.chapter.dataSaver.length == 0 && (
         <div className="text-white">Can't find image of this chapter</div>
