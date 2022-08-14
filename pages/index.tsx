@@ -102,6 +102,7 @@ export default function Home(props: IPropsListManga) {
                   width={300}
                   height={420}
                   className="rounded-xl"
+                  quality={20}
                 />
                 <div className="w-2/3 h-full ml-2 md:h-5/6">
                   <p className="mt-4 mb-6 text-xl md:text-3xl md:mt-10 line-clamp-4 md:line-clamp-none">
