@@ -244,7 +244,6 @@ export default function ChapterDetail() {
                   src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
                   width={width}
                   height={height}
-                  loading="eager"
                   key={fileName}
                   quality={index == 1 ? 2 : 5}
                 />
@@ -268,7 +267,6 @@ export default function ChapterDetail() {
                   src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
                   width={width}
                   height={height}
-                  loading="eager"
                   key={fileName}
                   quality={index == 1 ? 2 : 5}
                 />
