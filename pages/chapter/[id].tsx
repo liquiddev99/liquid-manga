@@ -237,7 +237,7 @@ export default function ChapterDetail() {
                 priority={index == 0 ? true : false}
                 loading={index > 0 ? "eager" : undefined}
                 key={fileName}
-                quality={index < 2 ? 5 : 15}
+                quality={index < 2 ? 2 : 5}
               />
             </>
           ))
@@ -251,7 +251,7 @@ export default function ChapterDetail() {
                 priority={index == 0 ? true : false}
                 loading={index > 0 ? "eager" : undefined}
                 key={fileName}
-                quality={index < 2 ? 5 : 15}
+                quality={index < 2 ? 2 : 5}
               />
             </>
           ))}
