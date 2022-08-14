@@ -230,29 +230,49 @@ export default function ChapterDetail() {
       {imgData && !loading && imgData.chapter.dataSaver.length > 0
         ? imgData.chapter.dataSaver.map((fileName: string, index: number) => (
             <>
-              <Image
-                src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
-                width={width}
-                height={height}
-                priority={index == 0 ? true : false}
-                loading={index > 0 ? "eager" : undefined}
-                key={fileName}
-                quality={index < 2 ? 2 : 5}
-              />
+              {index == 0 ? (
+                <Image
+                  src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
+                  width={width}
+                  height={height}
+                  key={fileName}
+                  priority
+                  quality={2}
+                />
+              ) : (
+                <Image
+                  src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
+                  width={width}
+                  height={height}
+                  loading="eager"
+                  key={fileName}
+                  quality={index == 1 ? 2 : 5}
+                />
+              )}
             </>
           ))
         : imgData &&
           imgData.chapter.data.map((fileName: string, index: number) => (
             <>
-              <Image
-                src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
-                width={width}
-                height={height}
-                priority={index == 0 ? true : false}
-                loading={index > 0 ? "eager" : undefined}
-                key={fileName}
-                quality={index < 2 ? 2 : 5}
-              />
+              {index == 0 ? (
+                <Image
+                  src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
+                  width={width}
+                  height={height}
+                  key={fileName}
+                  priority
+                  quality={2}
+                />
+              ) : (
+                <Image
+                  src={`${imgData.baseUrl}/data/${imgData.chapter.hash}/${fileName}`}
+                  width={width}
+                  height={height}
+                  loading="eager"
+                  key={fileName}
+                  quality={index == 1 ? 2 : 5}
+                />
+              )}
             </>
           ))}
 
