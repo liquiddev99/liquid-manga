@@ -245,6 +245,7 @@ export default function ChapterDetail() {
                   width={width}
                   height={height}
                   key={fileName}
+                  lazyBoundary="2500px"
                   quality={index == 1 ? 2 : 5}
                 />
               )}
@@ -268,6 +269,7 @@ export default function ChapterDetail() {
                   width={width}
                   height={height}
                   key={fileName}
+                  lazyBoundary="2500px"
                   quality={index == 1 ? 2 : 5}
                 />
               )}
