@@ -239,9 +239,19 @@ export default function ChapterDetail() {
                   key={fileName}
                   priority
                   quality={2}
+                />
+              ) : index == 2 ? (
+                <Image
+                  src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
+                  width={width}
+                  height={height}
+                  key={fileName}
+                  loading={loadMode}
+                  lazyBoundary="2500px"
                   onLoadingComplete={() => {
                     setLoadMode("eager");
                   }}
+                  quality={2}
                 />
               ) : (
                 <Image
