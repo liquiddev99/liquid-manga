@@ -45,6 +45,7 @@ export default function ChapterDetail() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [width, setWidth] = useState(850);
   const [height, setHeight] = useState(1150);
+  const [loadMode, setLoadMode] = useState<"lazy" | "eager">("lazy");
 
   const mangaFetcher = async (url: string) => {
     const res = await axios.get(url);
@@ -238,6 +239,9 @@ export default function ChapterDetail() {
                   key={fileName}
                   priority
                   quality={2}
+                  onLoadingComplete={() => {
+                    setLoadMode("eager");
+                  }}
                 />
               ) : (
                 <Image
@@ -245,6 +249,7 @@ export default function ChapterDetail() {
                   width={width}
                   height={height}
                   key={fileName}
+                  loading={loadMode}
                   lazyBoundary="2500px"
                   quality={index == 1 ? 2 : 5}
                 />
@@ -261,6 +266,9 @@ export default function ChapterDetail() {
                   height={height}
                   key={fileName}
                   priority
+                  onLoadingComplete={() => {
+                    setLoadMode("eager");
+                  }}
                   quality={2}
                 />
               ) : (
@@ -269,6 +277,7 @@ export default function ChapterDetail() {
                   width={width}
                   height={height}
                   key={fileName}
+                  loading={loadMode}
                   lazyBoundary="2500px"
                   quality={index == 1 ? 2 : 5}
                 />
