@@ -240,14 +240,14 @@ export default function ChapterDetail() {
                   priority
                   quality={2}
                 />
-              ) : index == 4 ? (
+              ) : index == 5 ? (
                 <Image
                   src={`${imgData.baseUrl}/data-saver/${imgData.chapter.hash}/${fileName}`}
                   width={width}
                   height={height}
                   key={fileName}
                   loading={loadMode}
-                  lazyBoundary="2500px"
+                  lazyBoundary="2200px"
                   onLoadingComplete={() => {
                     setLoadMode("eager");
                   }}
@@ -260,7 +260,7 @@ export default function ChapterDetail() {
                   height={height}
                   key={fileName}
                   loading={loadMode}
-                  lazyBoundary="2500px"
+                  lazyBoundary="2200px"
                   quality={index == 1 ? 2 : 5}
                 />
               )}
