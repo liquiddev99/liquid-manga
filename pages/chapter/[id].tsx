@@ -49,6 +49,7 @@ export default function ChapterDetail() {
 
   const mangaFetcher = async (url: string) => {
     const res = await axios.get(url);
+    // set a less width due to the korean img size
     if (res.data.tags.some((tag: any) => tag.name == "Long Strip")) {
       setWidth(600);
       setHeight(1300);
@@ -237,7 +238,7 @@ export default function ChapterDetail() {
                   height={height}
                   key={fileName}
                   priority
-                  quality={50}
+                  quality={60}
                 />
               ) : index == 5 ? (
                 <Image
@@ -250,7 +251,7 @@ export default function ChapterDetail() {
                   onLoadingComplete={() => {
                     setLoadMode("eager");
                   }}
-                  quality={50}
+                  quality={60}
                 />
               ) : (
                 <Image
@@ -260,7 +261,7 @@ export default function ChapterDetail() {
                   key={fileName}
                   loading={loadMode}
                   lazyBoundary="2500px"
-                  quality={index == 1 ? 30 : 50}
+                  quality={index == 1 ? 45 : 60}
                 />
               )}
             </>
@@ -288,7 +289,7 @@ export default function ChapterDetail() {
                   key={fileName}
                   loading={loadMode}
                   lazyBoundary="2500px"
-                  quality={index == 1 ? 30 : 50}
+                  quality={index == 1 ? 45 : 60}
                 />
               )}
             </>
