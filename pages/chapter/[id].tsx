@@ -49,11 +49,7 @@ export default function ChapterDetail() {
 
   const mangaFetcher = async (url: string) => {
     const res = await axios.get(url);
-    if (
-      res.data.tags.some(
-        (tag: any) => tag.name == "Long Strip" || tag.name == "Web Comic"
-      )
-    ) {
+    if (res.data.tags.some((tag: any) => tag.name == "Long Strip")) {
       setWidth(600);
       setHeight(1300);
     }
