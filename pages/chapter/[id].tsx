@@ -241,7 +241,7 @@ export default function ChapterDetail() {
                   height={height}
                   key={fileName}
                   priority
-                  quality={2}
+                  quality={50}
                 />
               ) : index == 5 ? (
                 <Image
@@ -254,7 +254,7 @@ export default function ChapterDetail() {
                   onLoadingComplete={() => {
                     setLoadMode("eager");
                   }}
-                  quality={2}
+                  quality={50}
                 />
               ) : (
                 <Image
@@ -264,7 +264,7 @@ export default function ChapterDetail() {
                   key={fileName}
                   loading={loadMode}
                   lazyBoundary="2500px"
-                  quality={index == 1 ? 2 : 5}
+                  quality={index == 1 ? 30 : 50}
                 />
               )}
             </>
@@ -282,7 +282,7 @@ export default function ChapterDetail() {
                   onLoadingComplete={() => {
                     setLoadMode("eager");
                   }}
-                  quality={2}
+                  quality={50}
                 />
               ) : (
                 <Image
@@ -292,7 +292,7 @@ export default function ChapterDetail() {
                   key={fileName}
                   loading={loadMode}
                   lazyBoundary="2500px"
-                  quality={index == 1 ? 2 : 5}
+                  quality={index == 1 ? 30 : 50}
                 />
               )}
             </>
