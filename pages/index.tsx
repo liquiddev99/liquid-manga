@@ -80,6 +80,11 @@ export default function Home(props: IPropsListManga) {
     <>
       <Head>
         <title>Liquid Manga</title>
+        <meta name="description" content="Manga Reading Site" />
+        <meta property="og:title" content="Liquid Manga" />
+        <meta property="og:description" content="Manga Reading Site" />
+        <meta property="og:URL" content="https://liquidmanga.me/" />
+        <meta property="og:type" content="website" />
       </Head>
       <div className="relative bg-gradient-to-b from-top via-middle to-bottom">
         <div
